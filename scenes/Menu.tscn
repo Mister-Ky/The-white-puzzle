@@ -1,0 +1,55 @@
+[gd_scene load_steps=3 format=3 uid="uid://dmoi8egpgdrjb"]
+
+[ext_resource type="Script" path="res://scripts/Menu.gd" id="1_xvtuy"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ape0v"]
+font_size = 60
+outline_size = 40
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Menu" type="Node"]
+script = ExtResource("1_xvtuy")
+
+[node name="ui" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="margin" type="MarginContainer" parent="ui"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="vbox" type="VBoxContainer" parent="ui/margin"]
+layout_mode = 2
+
+[node name="title" type="Label" parent="ui/margin/vbox"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "The white puzzle"
+label_settings = SubResource("LabelSettings_ape0v")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="vbox" type="VBoxContainer" parent="ui/margin/vbox"]
+custom_minimum_size = Vector2(800, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+
+[node name="play" type="Button" parent="ui/margin/vbox/vbox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "PLAY"
+
+[connection signal="pressed" from="ui/margin/vbox/vbox/play" to="." method="_on_play_pressed"]
