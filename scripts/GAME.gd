@@ -16,8 +16,11 @@ var currently_z_index := 0
 func _ready() -> void:
 	for i in range(0, num_puzzles):
 		var puzzle := Puzzle.new()
-		puzzle.global_position = Vector2(randi() % 100, randi() % 100)
+		puzzle.hide()
 		puzzles_storage.add_child(puzzle)
+		puzzle.position = Vector2(randi() % int(puzzles_storage.size.x - puzzle.texture.get_size().x), randi() % int(puzzles_storage.size.y - puzzle.texture.get_size().y))
+		puzzle.position += puzzle.texture.get_size() / 2
+		puzzle.show()
 
 func sort_puzzles(a : Puzzle, b : Puzzle) -> bool:
 	if not a.z_index == b.z_index:

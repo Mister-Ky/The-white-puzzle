@@ -1,15 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://dx4sfs3ghkh8a"]
+[gd_scene load_steps=5 format=3 uid="uid://dx4sfs3ghkh8a"]
 
 [ext_resource type="Script" path="res://scripts/GAME.gd" id="1_tn0fk"]
 [ext_resource type="Script" path="res://scripts/Camera.gd" id="2_bv0mh"]
 [ext_resource type="PackedScene" uid="uid://m4c5csg3me2t" path="res://scenes/Board.tscn" id="2_unson"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_rm77l"]
+font_size = 55
+outline_size = 15
+outline_color = Color(0, 0, 0, 1)
 
 [node name="GAME" type="Node"]
 script = ExtResource("1_tn0fk")
 
 [node name="board" parent="." instance=ExtResource("2_unson")]
 unique_name_in_owner = true
-size = Vector2i(2, 10)
+debug = true
+grid_offset = Vector2i(5, 5)
 
 [node name="puzzles" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -19,6 +25,12 @@ unique_name_in_owner = true
 script = ExtResource("2_bv0mh")
 
 [node name="ui" type="CanvasLayer" parent="."]
+
+[node name="info" type="Label" parent="ui"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = " ESCAPE for EXIT"
+label_settings = SubResource("LabelSettings_rm77l")
 
 [node name="hbox" type="HBoxContainer" parent="ui"]
 anchors_preset = 15
@@ -38,6 +50,7 @@ size_flags_horizontal = 3
 
 [node name="puzzles_storage" type="Control" parent="ui/hbox/panel"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(479, 1080)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
