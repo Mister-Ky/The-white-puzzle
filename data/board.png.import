@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b1owbstldohf"
-path.bptc="res://.godot/imported/puzzle.png-a191b11428b68f4dabcf51db2789150d.bptc.ctex"
+uid="uid://dgwkfl0gcuyet"
+path.bptc="res://.godot/imported/board.png-19e01c319b7e28888d833106270bda60.bptc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://data/puzzle.png"
-dest_files=["res://.godot/imported/puzzle.png-a191b11428b68f4dabcf51db2789150d.bptc.ctex"]
+source_file="res://data/board.png"
+dest_files=["res://.godot/imported/board.png-19e01c319b7e28888d833106270bda60.bptc.ctex"]
 
 [params]
 
