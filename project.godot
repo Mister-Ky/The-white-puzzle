@@ -21,6 +21,7 @@ config/icon="res://godot_icon.svg"
 [autoload]
 
 Main="*res://scripts/Main.gd"
+DebugMenu="*res://addons/debug-menu/debug_menu.tscn"
 
 [display]
 
@@ -30,9 +31,14 @@ window/size/mode=3
 window/stretch/mode="viewport"
 window/stretch/aspect="ignore"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/debug-menu/plugin.cfg")
+
 [file_customization]
 
 folder_colors={
+"res://addons/": "gray",
 "res://data/": "green",
 "res://scenes/": "blue",
 "res://scripts/": "red"

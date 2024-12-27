@@ -14,7 +14,6 @@ script = ExtResource("1_tn0fk")
 
 [node name="board" parent="." instance=ExtResource("2_unson")]
 unique_name_in_owner = true
-debug = true
 grid_offset = Vector2i(5, 5)
 
 [node name="puzzles" type="Node2D" parent="."]
@@ -22,6 +21,7 @@ unique_name_in_owner = true
 
 [node name="camera" type="Camera2D" parent="."]
 unique_name_in_owner = true
+offset = Vector2(830, 420)
 script = ExtResource("2_bv0mh")
 
 [node name="ui" type="CanvasLayer" parent="."]
