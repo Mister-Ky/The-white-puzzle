@@ -18,11 +18,9 @@ var currently_z_index := 0
 func _ready() -> void:
 	for i in range(0, num_puzzles):
 		var puzzle := Puzzle.new()
-		puzzle.hide()
 		puzzles_storage.add_child(puzzle)
 		puzzle.position = Vector2(randi() % int(puzzles_storage.size.x - puzzle.texture.get_size().x), randi() % int(puzzles_storage.size.y - puzzle.texture.get_size().y))
 		puzzle.position += puzzle.texture.get_size() / 2
-		puzzle.show()
 		z_puzzles.append(puzzle)
 	z_puzzles.sort_custom(sort_puzzles)
 
