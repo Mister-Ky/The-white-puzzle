@@ -27,7 +27,7 @@ func _physics_process(_delta : float) -> void:
 	z_puzzles.sort_custom(sort_puzzles)
 	
 	for puzzle : Puzzle in z_puzzles:
-		if (left_click_pressed or right_click_pressed) and puzzle.get_rect().has_point(puzzle.get_local_mouse_position()):
+		if (left_click_pressed or right_click_pressed) and puzzle.get_rect().has_point(puzzle.get_local_mouse_position()) and not currently_dragged_puzzle:
 			currently_dragged_puzzle = puzzle
 			currently_z_index += 1
 			puzzle.z_index = currently_z_index
