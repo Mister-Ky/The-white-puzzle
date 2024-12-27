@@ -4,6 +4,7 @@ extends Node
 @onready var board : Board = %board
 @onready var puzzles : Node2D = %puzzles
 @onready var puzzles_storage : Control = %puzzles_storage
+@onready var camera : Camera = %camera
 
 var num_puzzles : int :
 	set(_value): pass
@@ -44,7 +45,13 @@ func _physics_process(_delta : float) -> void:
 			puzzle.rotate(deg_to_rad(90))
 		if Input.is_action_pressed("left_click") and currently_dragged_puzzle == puzzle:
 			puzzle.global_position = puzzle.get_global_mouse_position()
-			if puzzle.get_parent() == puzzles_storage and puzzle.get_rect().position.x + puzzle.get_rect().size.x <= puzzles_storage.get_rect().position.x:
+			puzzle.show()
+			if puzzle.get_parent() == puzzles_storage and puzzles_storage.get_local_mouse_position().x <= 0:
+				puzzle.hide()
 				puzzles_storage.remove_child(puzzle)
 				puzzles.add_child(puzzle)
+			elif puzzle.get_parent() == puzzles and puzzles_storage.get_local_mouse_position().x > 0:
+				puzzle.hide()
+				puzzles.remove_child(puzzle)
+				puzzles_storage.add_child(puzzle)
 			break
