@@ -16,7 +16,7 @@ var currently_z_index := 0
 @onready var z_puzzles := []
 
 func _ready() -> void:
-	for i in range(0, num_puzzles):
+	for i in range(num_puzzles):
 		var puzzle := Puzzle.new()
 		puzzles_storage.add_child(puzzle)
 		puzzle.position = Vector2(randi() % int(puzzles_storage.size.x - puzzle.texture.get_size().x), randi() % int(puzzles_storage.size.y - puzzle.texture.get_size().y))
