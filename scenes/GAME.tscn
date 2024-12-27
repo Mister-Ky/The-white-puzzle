@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dx4sfs3ghkh8a"]
+
+[ext_resource type="Script" path="res://scripts/GAME.gd" id="1_tn0fk"]
+[ext_resource type="Script" path="res://scripts/Camera.gd" id="2_bv0mh"]
+
+[node name="GAME" type="Node"]
+script = ExtResource("1_tn0fk")
+
+[node name="puzzles" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="camera" type="Camera2D" parent="."]
+script = ExtResource("2_bv0mh")
