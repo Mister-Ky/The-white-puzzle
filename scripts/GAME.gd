@@ -20,16 +20,21 @@ func sort_puzzles(a : Puzzle, b : Puzzle) -> bool:
 func _physics_process(_delta : float) -> void:
 	var left_click_pressed := Input.is_action_just_pressed("left_click")
 	var left_click_released := Input.is_action_just_released("left_click")
+	var right_click_pressed := Input.is_action_just_pressed("right_click")
+	var right_click_released := Input.is_action_just_released("right_click")
+	
 	var z_puzzles := puzzles.get_children()
 	z_puzzles.sort_custom(sort_puzzles)
+	
 	for puzzle : Puzzle in z_puzzles:
-		if left_click_pressed and puzzle.get_rect().has_point(puzzle.get_local_mouse_position()):
+		if (left_click_pressed or right_click_pressed) and puzzle.get_rect().has_point(puzzle.get_local_mouse_position()):
 			currently_dragged_puzzle = puzzle
 			currently_z_index += 1
-			currently_dragged_puzzle.z_index += currently_z_index
-		elif left_click_released and currently_dragged_puzzle == puzzle:
-			currently_dragged_puzzle.z_index = currently_z_index
+			puzzle.z_index = currently_z_index
+		elif (left_click_released or right_click_released) and currently_dragged_puzzle == puzzle:
 			currently_dragged_puzzle = null
-		if currently_dragged_puzzle == puzzle:
+		if right_click_pressed and currently_dragged_puzzle == puzzle:
+			puzzle.rotate(deg_to_rad(90))
+		if Input.is_action_pressed("left_click") and currently_dragged_puzzle == puzzle:
 			puzzle.global_position = puzzle.get_global_mouse_position()
 			break
