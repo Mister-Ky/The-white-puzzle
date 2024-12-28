@@ -3,6 +3,8 @@ extends Node
 ## Разделитель для консоли. Используйте так - [code]print(Main.CONLINE)[/code].
 const CONLINE := "----------------------------------------" # 40
 
+const cell_size := Vector2i(64, 64)
+
 func _ready() -> void:
 	pass
 

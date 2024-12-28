@@ -2,9 +2,9 @@ class_name GAME
 extends Node
 
 @onready var board : Board = %board
+@onready var camera : Camera = %camera
 @onready var puzzles : Node2D = %puzzles
 @onready var puzzles_storage : Control = %puzzles_storage
-@onready var camera : Camera = %camera
 
 var num_puzzles : int :
 	set(_value): pass
@@ -29,6 +29,28 @@ func sort_puzzles(a : Puzzle, b : Puzzle) -> bool:
 		return a.z_index > b.z_index
 	return a.get_index() > b.get_index()
 
+func is_cell_occupied(cell_position : Vector2) -> bool:
+	for puzzle : Puzzle in z_puzzles:
+		if puzzle.get_rect().has_point(cell_position - puzzle.global_position) and puzzle.block:
+			return true
+	return false
+
+func move_puzzle(puzzle : Puzzle) -> void:
+	var nearest_point : Vector2 = board.cell_centers[0] + board.global_position
+	var min_distance := puzzle.global_position.distance_to(nearest_point)
+
+	for center : Vector2 in board.cell_centers:
+		center += board.global_position
+		var distance := puzzle.global_position.distance_to(center)
+		if distance < min_distance:
+			nearest_point = center
+			min_distance = distance
+	if (min_distance <= Main.cell_size.x / 2) and (not is_cell_occupied(nearest_point)):
+		puzzle.global_position = nearest_point
+		puzzle.block = true
+		puzzle.z_index = 0
+		z_puzzles.sort_custom(sort_puzzles)
+
 func _physics_process(_delta : float) -> void:
 	var left_click_pressed := Input.is_action_pressed("left_click")
 	var left_click_released := Input.is_action_just_released("left_click")
@@ -42,11 +64,14 @@ func _physics_process(_delta : float) -> void:
 			puzzle.z_index = currently_z_index
 			z_puzzles.sort_custom(sort_puzzles)
 		elif (left_click_released or right_click_released) and currently_dragged_puzzle == puzzle:
+			if left_click_released:
+				move_puzzle(currently_dragged_puzzle)
 			currently_dragged_puzzle = null
 		if right_click_pressed and currently_dragged_puzzle == puzzle:
 			puzzle.rotate(1.5708)
 		if left_click_pressed and currently_dragged_puzzle == puzzle:
 			puzzle.global_position = puzzle.get_global_mouse_position()
+			puzzle.block = false
 			puzzle.show()
 			if puzzle.get_parent() == puzzles_storage and puzzles_storage.get_local_mouse_position().x <= 0:
 				puzzle.hide()

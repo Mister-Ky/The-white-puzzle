@@ -1,13 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://dx4sfs3ghkh8a"]
+[gd_scene load_steps=7 format=3 uid="uid://dx4sfs3ghkh8a"]
 
 [ext_resource type="Script" path="res://scripts/GAME.gd" id="1_tn0fk"]
 [ext_resource type="Script" path="res://scripts/Camera.gd" id="2_bv0mh"]
 [ext_resource type="PackedScene" uid="uid://m4c5csg3me2t" path="res://scenes/Board.tscn" id="2_unson"]
+[ext_resource type="Texture2D" uid="uid://cfbdgeaepjjt2" path="res://data/storage.png" id="4_gad56"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_rm77l"]
 font_size = 55
 outline_size = 15
 outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3a8wa"]
+texture = ExtResource("4_gad56")
 
 [node name="GAME" type="Node"]
 script = ExtResource("1_tn0fk")
@@ -15,14 +19,14 @@ script = ExtResource("1_tn0fk")
 [node name="board" parent="." instance=ExtResource("2_unson")]
 unique_name_in_owner = true
 debug = true
-grid_offset = Vector2i(5, 5)
+size = Vector2i(3, 3)
 
 [node name="puzzles" type="Node2D" parent="."]
 unique_name_in_owner = true
 
 [node name="camera" type="Camera2D" parent="."]
 unique_name_in_owner = true
-offset = Vector2(830, 420)
+offset = Vector2(840, 420)
 script = ExtResource("2_bv0mh")
 
 [node name="ui" type="CanvasLayer" parent="."]
@@ -48,6 +52,7 @@ size_flags_stretch_ratio = 3.0
 [node name="panel" type="Panel" parent="ui/hbox"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxTexture_3a8wa")
 
 [node name="puzzles_storage" type="Control" parent="ui/hbox/panel"]
 unique_name_in_owner = true
