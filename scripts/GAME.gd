@@ -35,17 +35,18 @@ func is_cell_occupied(cell_position : Vector2) -> bool:
 			return true
 	return false
 
-func move_puzzle(puzzle : Puzzle) -> void:
-	var nearest_point : Vector2 = board.cell_centers[0] + board.global_position
+func move_puzzle(puzzle: Puzzle) -> void:
+	var nearest_point: Vector2 = board.cell_centers[0] + board.global_position
 	var min_distance := puzzle.global_position.distance_to(nearest_point)
 	
-	for center : Vector2 in board.cell_centers:
+	for center: Vector2 in board.cell_centers:
 		center += board.global_position
 		var distance := puzzle.global_position.distance_to(center)
 		if distance < min_distance:
 			nearest_point = center
 			min_distance = distance
-	if (min_distance <= Main.cell_size.x / 2) and (not is_cell_occupied(nearest_point)):
+	
+	if (puzzle.get_rect().has_point(nearest_point - puzzle.global_position)) and (not is_cell_occupied(nearest_point)):
 		puzzle.global_position = nearest_point
 		puzzle.block = true
 		puzzle.z_index = 0

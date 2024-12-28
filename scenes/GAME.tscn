@@ -32,7 +32,7 @@ script = ExtResource("2_bv0mh")
 [node name="info" type="Label" parent="ui"]
 offset_right = 40.0
 offset_bottom = 23.0
-text = " ESCAPE for EXIT"
+text = " ESCAPE for EXIT TO MENU"
 label_settings = SubResource("LabelSettings_rm77l")
 
 [node name="hbox" type="HBoxContainer" parent="ui"]

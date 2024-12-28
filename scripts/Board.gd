@@ -24,7 +24,6 @@ func _calculate_cell_centers() -> void:
 
 func _ready() -> void:
 	sprite.scale = Main.size
-	grid_offset = grid_offset
 	_calculate_cell_centers()
 
 func _draw() -> void:

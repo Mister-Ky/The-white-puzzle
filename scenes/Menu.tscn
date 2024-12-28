@@ -1,6 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://dmoi8egpgdrjb"]
+[gd_scene load_steps=5 format=3 uid="uid://dmoi8egpgdrjb"]
 
 [ext_resource type="Script" path="res://scripts/Menu.gd" id="1_xvtuy"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_b1eln"]
+font_size = 55
+outline_size = 15
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_ape0v"]
 font_size = 60
@@ -14,6 +19,12 @@ Label/font_sizes/font_size = 50
 
 [node name="Menu" type="Node"]
 script = ExtResource("1_xvtuy")
+
+[node name="info" type="Label" parent="."]
+offset_right = 698.0
+offset_bottom = 76.0
+text = " ESCAPE for EXIT"
+label_settings = SubResource("LabelSettings_b1eln")
 
 [node name="ui" type="Control" parent="."]
 layout_mode = 3
