@@ -62,6 +62,7 @@ custom_minimum_size = Vector2(800, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
 theme = SubResource("Theme_eyyvc")
 theme_override_constants/separation = 30
 
@@ -97,13 +98,13 @@ value = 10.0
 layout_mode = 2
 text = "RESET"
 
-[node name="debug_grid" type="CheckBox" parent="ui/margin/vbox/vbox"]
+[node name="debug" type="CheckBox" parent="ui/margin/vbox/vbox"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "DEBUG GRID"
+text = "DEBUG"
 
 [connection signal="pressed" from="ui/margin/vbox/vbox/play" to="." method="_on_play_pressed"]
 [connection signal="value_changed" from="ui/margin/vbox/vbox/X" to="." method="_on_x_value_changed"]
 [connection signal="value_changed" from="ui/margin/vbox/vbox/Y" to="." method="_on_y_value_changed"]
 [connection signal="pressed" from="ui/margin/vbox/vbox/reset" to="." method="_on_reset_pressed"]
-[connection signal="toggled" from="ui/margin/vbox/vbox/debug_grid" to="." method="_on_debug_grid_toggled"]
+[connection signal="toggled" from="ui/margin/vbox/vbox/debug" to="." method="_on_debug_toggled"]
