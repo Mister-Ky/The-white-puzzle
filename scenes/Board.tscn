@@ -9,6 +9,5 @@ script = ExtResource("1_kurbg")
 [node name="sprite" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 z_index = -1
-scale = Vector2(10, 10)
 texture = ExtResource("2_pg4xu")
 centered = false

@@ -15,4 +15,7 @@ func _input(event : InputEvent) -> void:
 	zoom = clamp(zoom, Vector2(0.05, 0.05), Vector2(3.0, 3.0))
 
 func _physics_process(_delta : float) -> void:
-	global_position += Vector2(Input.get_axis("ui_left", "ui_right"), Input.get_axis("ui_up", "ui_down")) * speed
+	var extra_speed := 1.0
+	if Input.is_action_pressed("shift"):
+		extra_speed = 2.5
+	global_position += Vector2(Input.get_axis("ui_left", "ui_right"), Input.get_axis("ui_up", "ui_down")) * speed * extra_speed

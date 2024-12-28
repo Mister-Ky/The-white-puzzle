@@ -18,8 +18,6 @@ script = ExtResource("1_tn0fk")
 
 [node name="board" parent="." instance=ExtResource("2_unson")]
 unique_name_in_owner = true
-debug = true
-size = Vector2i(3, 3)
 
 [node name="puzzles" type="Node2D" parent="."]
 unique_name_in_owner = true

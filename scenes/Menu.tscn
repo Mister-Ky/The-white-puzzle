@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://dmoi8egpgdrjb"]
+[gd_scene load_steps=4 format=3 uid="uid://dmoi8egpgdrjb"]
 
 [ext_resource type="Script" path="res://scripts/Menu.gd" id="1_xvtuy"]
 
@@ -6,6 +6,11 @@
 font_size = 60
 outline_size = 40
 outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Theme" id="Theme_eyyvc"]
+Button/font_sizes/font_size = 50
+CheckBox/font_sizes/font_size = 40
+Label/font_sizes/font_size = 50
 
 [node name="Menu" type="Node"]
 script = ExtResource("1_xvtuy")
@@ -46,10 +51,48 @@ custom_minimum_size = Vector2(800, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 3
+theme = SubResource("Theme_eyyvc")
+theme_override_constants/separation = 30
 
 [node name="play" type="Button" parent="ui/margin/vbox/vbox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 50
 text = "PLAY"
 
+[node name="X_label" type="Label" parent="ui/margin/vbox/vbox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "X : 10"
+
+[node name="X" type="HSlider" parent="ui/margin/vbox/vbox"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 1.0
+max_value = 256.0
+value = 10.0
+
+[node name="Y_label" type="Label" parent="ui/margin/vbox/vbox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Y : 10"
+
+[node name="Y" type="HSlider" parent="ui/margin/vbox/vbox"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 1.0
+max_value = 256.0
+value = 10.0
+
+[node name="reset" type="Button" parent="ui/margin/vbox/vbox"]
+layout_mode = 2
+text = "RESET"
+
+[node name="debug_grid" type="CheckBox" parent="ui/margin/vbox/vbox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "DEBUG GRID"
+
 [connection signal="pressed" from="ui/margin/vbox/vbox/play" to="." method="_on_play_pressed"]
+[connection signal="value_changed" from="ui/margin/vbox/vbox/X" to="." method="_on_x_value_changed"]
+[connection signal="value_changed" from="ui/margin/vbox/vbox/Y" to="." method="_on_y_value_changed"]
+[connection signal="pressed" from="ui/margin/vbox/vbox/reset" to="." method="_on_reset_pressed"]
+[connection signal="toggled" from="ui/margin/vbox/vbox/debug_grid" to="." method="_on_debug_grid_toggled"]
