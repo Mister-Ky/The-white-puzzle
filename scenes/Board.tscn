@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://m4c5csg3me2t"]
 
 [ext_resource type="Script" path="res://scripts/Board.gd" id="1_kurbg"]
-[ext_resource type="Shader" path="res://data/puzzle.gdshader" id="2_efyc5"]
+[ext_resource type="Shader" path="res://data/outline.gdshader" id="2_efyc5"]
 [ext_resource type="Texture2D" uid="uid://ctuakynsr13kb" path="res://data/board.png" id="2_pg4xu"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xadvy"]

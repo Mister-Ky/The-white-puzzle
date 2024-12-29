@@ -14,7 +14,7 @@ var puzzle_shader : Material
 
 func _ready() -> void:
 	puzzle_shader = ShaderMaterial.new()
-	puzzle_shader.shader = load("res://data/puzzle.gdshader")
+	puzzle_shader.shader = load("res://data/outline.gdshader")
 	puzzle_shader.set_shader_parameter("thickness", 2)
 	puzzle_shader.set_shader_parameter("square_border", true)
 
