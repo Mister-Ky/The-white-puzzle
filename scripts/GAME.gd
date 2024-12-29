@@ -15,13 +15,11 @@ var currently_z_index := 0
 
 func _ready() -> void:
 	num_puzzles = board.size.x * board.size.y
-	for x in range(board.size.x):
-		for y in range(board.size.y):
-			var puzzle := Puzzle.new()
-			puzzles_storage.add_child(puzzle)
-			puzzle.cell = Vector2i(x, y)
-			puzzle.position = Vector2(randi() % int(puzzles_storage.size.x - puzzle.texture.get_size().x), randi() % int(puzzles_storage.size.y - puzzle.texture.get_size().y)) + puzzle.texture.get_size() / 2
-			z_puzzles.append(puzzle)
+	for i in range(num_puzzles):
+		var puzzle := Puzzle.new()
+		puzzles_storage.add_child(puzzle)
+		puzzle.position = Vector2(randi() % int(puzzles_storage.size.x - puzzle.texture.get_size().x), randi() % int(puzzles_storage.size.y - puzzle.texture.get_size().y)) + puzzle.texture.get_size() / 2
+		z_puzzles.append(puzzle)
 	z_puzzles.sort_custom(sort_puzzles)
 
 func sort_puzzles(a : Puzzle, b : Puzzle) -> bool:

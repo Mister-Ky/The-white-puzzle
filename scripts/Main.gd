@@ -11,7 +11,8 @@ var size := Vector2i(10, 10)
 var debug := false
 
 func _ready() -> void:
-	pass
+	if OS.has_feature("editor"):
+		debug = true
 
 func set_fullscreen(value : bool) -> void:
 	if value:
