@@ -56,9 +56,7 @@ func _physics_process(_delta : float) -> void:
 	var right_click_pressed := Input.is_action_just_pressed("right_click")
 	var right_click_released := Input.is_action_just_released("right_click")
 	
-	var blocked := 0
 	for puzzle : Puzzle in z_puzzles:
-		if puzzle.block: blocked += 1
 		if (left_click_pressed or right_click_pressed) and puzzle.get_rect().has_point(puzzle.get_local_mouse_position()) and not currently_dragged_puzzle:
 			currently_dragged_puzzle = puzzle
 			currently_z_index += 1
@@ -68,6 +66,7 @@ func _physics_process(_delta : float) -> void:
 			if left_click_released:
 				move_puzzle(currently_dragged_puzzle)
 			currently_dragged_puzzle = null
+			check()
 		if right_click_pressed and currently_dragged_puzzle == puzzle:
 			puzzle.rotate(1.5708)
 		if left_click_pressed and currently_dragged_puzzle == puzzle:
@@ -83,5 +82,10 @@ func _physics_process(_delta : float) -> void:
 				puzzles.remove_child(puzzle)
 				puzzles_storage.add_child(puzzle)
 			break
+
+func check() -> void:
+	var blocked := 0
+	for p : Puzzle in z_puzzles:
+		if p.block: blocked += 1
 	if blocked == num_puzzles:
 		pass
