@@ -5,15 +5,16 @@ extends Node
 @onready var camera : Camera = %camera
 @onready var puzzles : Node2D = %puzzles
 @onready var puzzles_storage : Control = %puzzles_storage
+@onready var victory : Control = %victory
 
 var num_puzzles : int
 
 var currently_dragged_puzzle : Puzzle = null
-var currently_z_index := 0
 
 @onready var z_puzzles := []
 
 func _ready() -> void:
+	victory.hide()
 	num_puzzles = board.size.x * board.size.y
 	for i in range(num_puzzles):
 		var puzzle := Puzzle.new()
@@ -59,14 +60,19 @@ func _physics_process(_delta : float) -> void:
 	for puzzle : Puzzle in z_puzzles:
 		if (left_click_pressed or right_click_pressed) and puzzle.get_rect().has_point(puzzle.get_local_mouse_position()) and not currently_dragged_puzzle:
 			currently_dragged_puzzle = puzzle
-			currently_z_index += 1
-			puzzle.z_index = currently_z_index
+			puzzle.z_index = 2
+			for p : Puzzle in z_puzzles:
+				if not p.block and not p == puzzle:
+					p.z_index = 1
 			z_puzzles.sort_custom(sort_puzzles)
 		elif (left_click_released or right_click_released) and currently_dragged_puzzle == puzzle:
 			if left_click_released:
 				move_puzzle(currently_dragged_puzzle)
 			currently_dragged_puzzle = null
-			check()
+			if check():
+				win()
+				set_physics_process(false)
+				return
 		if right_click_pressed and currently_dragged_puzzle == puzzle:
 			puzzle.rotate(1.5708)
 		if left_click_pressed and currently_dragged_puzzle == puzzle:
@@ -83,9 +89,16 @@ func _physics_process(_delta : float) -> void:
 				puzzles_storage.add_child(puzzle)
 			break
 
-func check() -> void:
+func check() -> bool:
 	var blocked := 0
 	for p : Puzzle in z_puzzles:
 		if p.block: blocked += 1
 	if blocked == num_puzzles:
-		pass
+		return true
+	return false
+
+func win() -> void:
+	victory.show()
+
+func _on_again_pressed() -> void:
+	get_tree().reload_current_scene()

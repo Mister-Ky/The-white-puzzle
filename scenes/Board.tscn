@@ -1,20 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://m4c5csg3me2t"]
+[gd_scene load_steps=4 format=3 uid="uid://m4c5csg3me2t"]
 
 [ext_resource type="Script" path="res://scripts/Board.gd" id="1_kurbg"]
-[ext_resource type="Shader" path="res://data/outline.gdshader" id="2_efyc5"]
 [ext_resource type="Texture2D" uid="uid://ctuakynsr13kb" path="res://data/board.png" id="2_pg4xu"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xadvy"]
-shader = ExtResource("2_efyc5")
-shader_parameter/thickness = 5.0
-shader_parameter/ring_count = 16
-shader_parameter/ring_offset = 0.0
-shader_parameter/outline_color = Color(0.278431, 0, 0, 1)
-shader_parameter/border_clipping_fix = true
-shader_parameter/aspect_ratio = 1.0
-shader_parameter/square_border = true
-shader_parameter/offset = null
-shader_parameter/max_or_add = false
+[ext_resource type="Material" uid="uid://b5m7ywaoo425l" path="res://data/board_material.tres" id="2_qmo5t"]
 
 [node name="Board" type="Node2D"]
 script = ExtResource("1_kurbg")
@@ -22,6 +10,6 @@ script = ExtResource("1_kurbg")
 [node name="sprite" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 z_index = -1
-material = SubResource("ShaderMaterial_xadvy")
+material = ExtResource("2_qmo5t")
 texture = ExtResource("2_pg4xu")
 centered = false

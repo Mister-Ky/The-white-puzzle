@@ -21,7 +21,7 @@ Label/font_sizes/font_size = 50
 script = ExtResource("1_xvtuy")
 
 [node name="info" type="Label" parent="."]
-offset_right = 698.0
+offset_right = 430.0
 offset_bottom = 76.0
 text = " ESCAPE for EXIT"
 label_settings = SubResource("LabelSettings_b1eln")

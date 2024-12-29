@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dx4sfs3ghkh8a"]
+[gd_scene load_steps=9 format=3 uid="uid://dx4sfs3ghkh8a"]
 
 [ext_resource type="Script" path="res://scripts/GAME.gd" id="1_tn0fk"]
 [ext_resource type="Script" path="res://scripts/Camera.gd" id="2_bv0mh"]
@@ -12,6 +12,17 @@ outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3a8wa"]
 texture = ExtResource("4_gad56")
+
+[sub_resource type="Theme" id="Theme_6ngh7"]
+Button/font_sizes/font_size = 50
+CheckBox/font_sizes/font_size = 40
+Label/font_sizes/font_size = 50
+
+[sub_resource type="LabelSettings" id="LabelSettings_tvgrn"]
+font_size = 60
+font_color = Color(0, 1, 0, 1)
+outline_size = 40
+outline_color = Color(0, 0, 0, 1)
 
 [node name="GAME" type="Node"]
 script = ExtResource("1_tn0fk")
@@ -30,6 +41,7 @@ script = ExtResource("2_bv0mh")
 [node name="ui" type="CanvasLayer" parent="."]
 
 [node name="info" type="Label" parent="ui"]
+z_index = 4096
 offset_right = 40.0
 offset_bottom = 23.0
 text = " ESCAPE for EXIT TO MENU"
@@ -61,3 +73,51 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="victory" type="Control" parent="ui"]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_6ngh7")
+
+[node name="fon" type="ColorRect" parent="ui/victory"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.356863)
+
+[node name="vbox" type="VBoxContainer" parent="ui/victory"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="info" type="Label" parent="ui/victory/vbox"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "YOU WIN !!!"
+label_settings = SubResource("LabelSettings_tvgrn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="vbox" type="VBoxContainer" parent="ui/victory/vbox"]
+custom_minimum_size = Vector2(800, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+
+[node name="again" type="Button" parent="ui/victory/vbox/vbox"]
+layout_mode = 2
+text = "Again"
+
+[connection signal="pressed" from="ui/victory/vbox/vbox/again" to="." method="_on_again_pressed"]
