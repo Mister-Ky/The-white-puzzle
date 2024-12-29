@@ -10,13 +10,8 @@ var size := Vector2i(10, 10)
 # Тоже но с дебагом
 var debug := false
 
-var puzzle_shader : Material
-
 func _ready() -> void:
-	puzzle_shader = ShaderMaterial.new()
-	puzzle_shader.shader = load("res://data/outline.gdshader")
-	puzzle_shader.set_shader_parameter("thickness", 2)
-	puzzle_shader.set_shader_parameter("square_border", true)
+	pass
 
 func set_fullscreen(value : bool) -> void:
 	if value:
@@ -26,9 +21,9 @@ func set_fullscreen(value : bool) -> void:
 
 func _unhandled_input(event : InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
-		if get_node_or_null("/root/Menu"):
+		if get_tree().current_scene is Menu:
 			exit()
-		elif get_node_or_null("/root/GAME"):
+		elif get_tree().current_scene is GAME:
 			get_tree().change_scene_to_file("res://scenes/Menu.tscn")
 	elif event.is_action_pressed("toggle_fullscreen"):
 		set_fullscreen(not get_window().mode == Window.MODE_FULLSCREEN)
