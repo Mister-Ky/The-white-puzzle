@@ -6,21 +6,19 @@ extends Node
 @onready var puzzles : Node2D = %puzzles
 @onready var puzzles_storage : Control = %puzzles_storage
 
-var num_puzzles : int :
-	set(_value): pass
-	get: return board.size.x * board.size.y
+var num_puzzles : int
 
-var currently_dragged_puzzle = null
+var currently_dragged_puzzle : Puzzle = null
 var currently_z_index := 0
 
 @onready var z_puzzles := []
 
 func _ready() -> void:
+	num_puzzles = board.size.x * board.size.y
 	for i in range(num_puzzles):
 		var puzzle := Puzzle.new()
 		puzzles_storage.add_child(puzzle)
-		puzzle.position = Vector2(randi() % int(puzzles_storage.size.x - puzzle.texture.get_size().x), randi() % int(puzzles_storage.size.y - puzzle.texture.get_size().y))
-		puzzle.position += puzzle.texture.get_size() / 2
+		puzzle.position = Vector2(randi() % int(puzzles_storage.size.x - puzzle.texture.get_size().x), randi() % int(puzzles_storage.size.y - puzzle.texture.get_size().y)) + puzzle.texture.get_size() / 2
 		z_puzzles.append(puzzle)
 	z_puzzles.sort_custom(sort_puzzles)
 

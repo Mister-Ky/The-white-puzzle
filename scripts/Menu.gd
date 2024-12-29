@@ -28,7 +28,6 @@ func _on_y_value_changed(value : float) -> void:
 
 func _on_reset_pressed() -> void:
 	Main.size = Vector2i(10, 10)
-	Main.debug = false
 	update()
 
 func _on_debug_toggled(toggled_on : bool) -> void:

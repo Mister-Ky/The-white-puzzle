@@ -8,3 +8,4 @@ var block := false
 func _ready() -> void:
 	texture = load("res://data/puzzle.png")
 	scale = Main.cell_size / Vector2i(texture.get_size())
+	material = Main.puzzle_shader

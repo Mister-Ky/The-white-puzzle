@@ -10,8 +10,13 @@ var size := Vector2i(10, 10)
 # Тоже но с дебагом
 var debug := false
 
+var puzzle_shader : Material
+
 func _ready() -> void:
-	pass
+	puzzle_shader = ShaderMaterial.new()
+	puzzle_shader.shader = load("res://data/puzzle.gdshader")
+	puzzle_shader.set_shader_parameter("thickness", 2)
+	puzzle_shader.set_shader_parameter("square_border", true)
 
 func set_fullscreen(value : bool) -> void:
 	if value:
