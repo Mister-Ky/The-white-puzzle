@@ -34,33 +34,25 @@ offset_bottom = 42.0
 text = "ESCAPE — exit to menu"
 label_settings = SubResource("LabelSettings_b1eln")
 
-[node name="godot" type="PanelContainer" parent="."]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -348.0
-offset_top = -195.0
-grow_horizontal = 0
-grow_vertical = 0
-
-[node name="margin" type="MarginContainer" parent="godot"]
-layout_mode = 2
+[node name="godot" type="MarginContainer" parent="."]
+offset_left = 1552.0
+offset_top = 865.0
+offset_right = 1920.0
+offset_bottom = 1080.0
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="vbox" type="VBoxContainer" parent="godot/margin"]
+[node name="vbox" type="VBoxContainer" parent="godot"]
 layout_mode = 2
 
-[node name="godot_icon" type="TextureRect" parent="godot/margin/vbox"]
+[node name="godot_icon" type="TextureRect" parent="godot/vbox"]
 layout_mode = 2
 texture = ExtResource("3_c6fof")
 stretch_mode = 3
 
-[node name="label" type="Label" parent="godot/margin/vbox"]
+[node name="label" type="Label" parent="godot/vbox"]
 layout_mode = 2
 text = "Made in GODOT"
 label_settings = SubResource("LabelSettings_k4k1x")
@@ -86,17 +78,12 @@ label_settings = SubResource("LabelSettings_ape0v")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="panel" type="PanelContainer" parent="margin/vbox"]
-custom_minimum_size = Vector2(950, 0)
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="margin" type="MarginContainer" parent="margin/vbox/panel"]
+[node name="margin" type="MarginContainer" parent="margin/vbox"]
 layout_mode = 2
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="vbox" type="VBoxContainer" parent="margin/vbox/panel/margin"]
+[node name="vbox" type="VBoxContainer" parent="margin/vbox/margin"]
 custom_minimum_size = Vector2(800, 0)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -105,45 +92,45 @@ size_flags_stretch_ratio = 2.0
 theme = SubResource("Theme_eyyvc")
 theme_override_constants/separation = 30
 
-[node name="play" type="Button" parent="margin/vbox/panel/margin/vbox"]
+[node name="play" type="Button" parent="margin/vbox/margin/vbox"]
 layout_mode = 2
 text = "PLAY"
 
-[node name="X_label" type="Label" parent="margin/vbox/panel/margin/vbox"]
+[node name="X_label" type="Label" parent="margin/vbox/margin/vbox"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "X : 10"
 
-[node name="X" type="HSlider" parent="margin/vbox/panel/margin/vbox"]
+[node name="X" type="HSlider" parent="margin/vbox/margin/vbox"]
 unique_name_in_owner = true
 layout_mode = 2
 min_value = 1.0
 max_value = 256.0
 value = 10.0
 
-[node name="Y_label" type="Label" parent="margin/vbox/panel/margin/vbox"]
+[node name="Y_label" type="Label" parent="margin/vbox/margin/vbox"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Y : 10"
 
-[node name="Y" type="HSlider" parent="margin/vbox/panel/margin/vbox"]
+[node name="Y" type="HSlider" parent="margin/vbox/margin/vbox"]
 unique_name_in_owner = true
 layout_mode = 2
 min_value = 1.0
 max_value = 256.0
 value = 10.0
 
-[node name="reset" type="Button" parent="margin/vbox/panel/margin/vbox"]
+[node name="reset" type="Button" parent="margin/vbox/margin/vbox"]
 layout_mode = 2
 text = "RESET"
 
-[node name="grid" type="CheckBox" parent="margin/vbox/panel/margin/vbox"]
+[node name="grid" type="CheckBox" parent="margin/vbox/margin/vbox"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Show the grid"
 
-[connection signal="pressed" from="margin/vbox/panel/margin/vbox/play" to="." method="_on_play_pressed"]
-[connection signal="value_changed" from="margin/vbox/panel/margin/vbox/X" to="." method="_on_x_value_changed"]
-[connection signal="value_changed" from="margin/vbox/panel/margin/vbox/Y" to="." method="_on_y_value_changed"]
-[connection signal="pressed" from="margin/vbox/panel/margin/vbox/reset" to="." method="_on_reset_pressed"]
-[connection signal="toggled" from="margin/vbox/panel/margin/vbox/grid" to="." method="_on_debug_toggled"]
+[connection signal="pressed" from="margin/vbox/margin/vbox/play" to="." method="_on_play_pressed"]
+[connection signal="value_changed" from="margin/vbox/margin/vbox/X" to="." method="_on_x_value_changed"]
+[connection signal="value_changed" from="margin/vbox/margin/vbox/Y" to="." method="_on_y_value_changed"]
+[connection signal="pressed" from="margin/vbox/margin/vbox/reset" to="." method="_on_reset_pressed"]
+[connection signal="toggled" from="margin/vbox/margin/vbox/grid" to="." method="_on_debug_toggled"]
