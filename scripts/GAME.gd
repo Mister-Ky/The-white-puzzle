@@ -5,6 +5,7 @@ extends Node
 @onready var camera : Camera = %camera
 @onready var puzzles : Node2D = %puzzles
 @onready var puzzles_storage : Control = %puzzles_storage
+@onready var storage : Panel = %storage
 @onready var victory : Control = %victory
 
 var num_puzzles : int
@@ -60,7 +61,8 @@ func _physics_process(_delta : float) -> void:
 	for puzzle : Puzzle in z_puzzles:
 		if (left_click_pressed or right_click_pressed) and puzzle.get_rect().has_point(puzzle.get_local_mouse_position()) and not currently_dragged_puzzle:
 			currently_dragged_puzzle = puzzle
-			puzzle.z_index = 2
+			if not puzzle.block:
+				puzzle.z_index = 2
 			for p : Puzzle in z_puzzles:
 				if not p.block and not p == puzzle:
 					p.z_index = 1
@@ -71,10 +73,13 @@ func _physics_process(_delta : float) -> void:
 			currently_dragged_puzzle = null
 			if check():
 				win()
-				set_physics_process(false)
 				return
 		if right_click_pressed and currently_dragged_puzzle == puzzle:
-			puzzle.rotate(1.5708)
+			set_physics_process(false)
+			var tween := create_tween().set_trans(Tween.TransitionType.TRANS_SINE).set_ease(Tween.EaseType.EASE_IN)
+			tween.tween_property(puzzle, "rotation_degrees", puzzle.rotation_degrees + 90, 0.2)
+			tween.tween_callback(rot)
+			return
 		if left_click_pressed and currently_dragged_puzzle == puzzle:
 			puzzle.global_position = puzzle.get_global_mouse_position()
 			puzzle.block = false
@@ -89,6 +94,13 @@ func _physics_process(_delta : float) -> void:
 				puzzles_storage.add_child(puzzle)
 			break
 
+func rot() -> void:
+	currently_dragged_puzzle = null
+	if check():
+		win()
+	else:
+		set_physics_process(true)
+
 func check() -> bool:
 	var blocked := 0
 	for p : Puzzle in z_puzzles:
@@ -98,7 +110,10 @@ func check() -> bool:
 	return false
 
 func win() -> void:
-	victory.show()
+	set_physics_process(false)
+	var tween := create_tween().set_trans(Tween.TransitionType.TRANS_SINE).set_ease(Tween.EaseType.EASE_IN)
+	tween.tween_property(storage, "global_position:x", get_viewport().size.x + storage.size.x, 1.0)
+	tween.tween_callback(victory.show)
 
 func _on_again_pressed() -> void:
 	get_tree().reload_current_scene()

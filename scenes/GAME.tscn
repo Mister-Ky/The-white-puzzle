@@ -59,12 +59,13 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 
-[node name="panel" type="Panel" parent="ui/hbox"]
+[node name="storage" type="Panel" parent="ui/hbox"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxTexture_3a8wa")
 
-[node name="puzzles_storage" type="Control" parent="ui/hbox/panel"]
+[node name="puzzles_storage" type="Control" parent="ui/hbox/storage"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(479, 1080)
 layout_mode = 1
