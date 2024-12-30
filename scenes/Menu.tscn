@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dmoi8egpgdrjb"]
+[gd_scene load_steps=6 format=3 uid="uid://dmoi8egpgdrjb"]
 
 [ext_resource type="Script" path="res://scripts/Menu.gd" id="1_xvtuy"]
+[ext_resource type="Material" uid="uid://dj72mh5bhamaf" path="res://data/fon_material.tres" id="2_tyq73"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_b1eln"]
-font_size = 55
+font_size = 30
 outline_size = 15
 outline_color = Color(0, 0, 0, 1)
 
@@ -21,21 +22,23 @@ Label/font_sizes/font_size = 50
 script = ExtResource("1_xvtuy")
 
 [node name="info" type="Label" parent="."]
-offset_right = 430.0
-offset_bottom = 76.0
-text = " ESCAPE for EXIT"
+z_index = 4096
+offset_left = 10.0
+offset_right = 347.0
+offset_bottom = 42.0
+text = "ESCAPE — exit to menu"
 label_settings = SubResource("LabelSettings_b1eln")
 
-[node name="ui" type="Control" parent="."]
-layout_mode = 3
+[node name="fon" type="ColorRect" parent="."]
+material = ExtResource("2_tyq73")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(1, 1, 1, 0)
 
-[node name="margin" type="MarginContainer" parent="ui"]
-layout_mode = 1
+[node name="margin" type="MarginContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -46,10 +49,10 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="vbox" type="VBoxContainer" parent="ui/margin"]
+[node name="vbox" type="VBoxContainer" parent="margin"]
 layout_mode = 2
 
-[node name="title" type="Label" parent="ui/margin/vbox"]
+[node name="title" type="Label" parent="margin/vbox"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "The white puzzle"
@@ -57,7 +60,17 @@ label_settings = SubResource("LabelSettings_ape0v")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="vbox" type="VBoxContainer" parent="ui/margin/vbox"]
+[node name="panel" type="PanelContainer" parent="margin/vbox"]
+custom_minimum_size = Vector2(950, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="margin" type="MarginContainer" parent="margin/vbox/panel"]
+layout_mode = 2
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="vbox" type="VBoxContainer" parent="margin/vbox/panel/margin"]
 custom_minimum_size = Vector2(800, 0)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -66,45 +79,45 @@ size_flags_stretch_ratio = 2.0
 theme = SubResource("Theme_eyyvc")
 theme_override_constants/separation = 30
 
-[node name="play" type="Button" parent="ui/margin/vbox/vbox"]
+[node name="play" type="Button" parent="margin/vbox/panel/margin/vbox"]
 layout_mode = 2
 text = "PLAY"
 
-[node name="X_label" type="Label" parent="ui/margin/vbox/vbox"]
+[node name="X_label" type="Label" parent="margin/vbox/panel/margin/vbox"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "X : 10"
 
-[node name="X" type="HSlider" parent="ui/margin/vbox/vbox"]
+[node name="X" type="HSlider" parent="margin/vbox/panel/margin/vbox"]
 unique_name_in_owner = true
 layout_mode = 2
 min_value = 1.0
 max_value = 256.0
 value = 10.0
 
-[node name="Y_label" type="Label" parent="ui/margin/vbox/vbox"]
+[node name="Y_label" type="Label" parent="margin/vbox/panel/margin/vbox"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Y : 10"
 
-[node name="Y" type="HSlider" parent="ui/margin/vbox/vbox"]
+[node name="Y" type="HSlider" parent="margin/vbox/panel/margin/vbox"]
 unique_name_in_owner = true
 layout_mode = 2
 min_value = 1.0
 max_value = 256.0
 value = 10.0
 
-[node name="reset" type="Button" parent="ui/margin/vbox/vbox"]
+[node name="reset" type="Button" parent="margin/vbox/panel/margin/vbox"]
 layout_mode = 2
 text = "RESET"
 
-[node name="debug" type="CheckBox" parent="ui/margin/vbox/vbox"]
+[node name="grid" type="CheckBox" parent="margin/vbox/panel/margin/vbox"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "DEBUG"
+text = "Show the grid"
 
-[connection signal="pressed" from="ui/margin/vbox/vbox/play" to="." method="_on_play_pressed"]
-[connection signal="value_changed" from="ui/margin/vbox/vbox/X" to="." method="_on_x_value_changed"]
-[connection signal="value_changed" from="ui/margin/vbox/vbox/Y" to="." method="_on_y_value_changed"]
-[connection signal="pressed" from="ui/margin/vbox/vbox/reset" to="." method="_on_reset_pressed"]
-[connection signal="toggled" from="ui/margin/vbox/vbox/debug" to="." method="_on_debug_toggled"]
+[connection signal="pressed" from="margin/vbox/panel/margin/vbox/play" to="." method="_on_play_pressed"]
+[connection signal="value_changed" from="margin/vbox/panel/margin/vbox/X" to="." method="_on_x_value_changed"]
+[connection signal="value_changed" from="margin/vbox/panel/margin/vbox/Y" to="." method="_on_y_value_changed"]
+[connection signal="pressed" from="margin/vbox/panel/margin/vbox/reset" to="." method="_on_reset_pressed"]
+[connection signal="toggled" from="margin/vbox/panel/margin/vbox/grid" to="." method="_on_debug_toggled"]

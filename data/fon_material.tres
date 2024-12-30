@@ -1,0 +1,12 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dj72mh5bhamaf"]
+
+[ext_resource type="Shader" path="res://data/fon.gdshader" id="1_neq4s"]
+
+[resource]
+shader = ExtResource("1_neq4s")
+shader_parameter/color_one = Color(0.501407, 0.501406, 0.501406, 1)
+shader_parameter/color_two = Color(0.329158, 0.329158, 0.329158, 1)
+shader_parameter/angle = 20.0
+shader_parameter/line_count = 12.0
+shader_parameter/speed = 0.2
+shader_parameter/blur = 1.7

@@ -11,12 +11,12 @@ const cell_size := Vector2i(64, 64)
 
 # Нужен чтобы из меню в игру перевести настройки
 var size := Vector2i(10, 10)
-# Тоже но с дебагом
-var debug := false
+# Тоже но с сеткой
+var grid := false
 
 func _ready() -> void:
 	if OS.has_feature("editor"):
-		debug = true
+		grid = true
 
 func set_fullscreen(value : bool) -> void:
 	if value:

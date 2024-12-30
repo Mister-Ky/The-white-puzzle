@@ -1,12 +1,14 @@
-[gd_scene load_steps=9 format=3 uid="uid://dx4sfs3ghkh8a"]
+[gd_scene load_steps=11 format=3 uid="uid://dx4sfs3ghkh8a"]
 
 [ext_resource type="Script" path="res://scripts/GAME.gd" id="1_tn0fk"]
 [ext_resource type="Script" path="res://scripts/Camera.gd" id="2_bv0mh"]
 [ext_resource type="PackedScene" uid="uid://m4c5csg3me2t" path="res://scenes/Board.tscn" id="2_unson"]
 [ext_resource type="Texture2D" uid="uid://cfbdgeaepjjt2" path="res://data/storage.png" id="4_gad56"]
+[ext_resource type="Material" uid="uid://dj72mh5bhamaf" path="res://data/fon_material.tres" id="4_qcuf1"]
+[ext_resource type="Script" path="res://scripts/TimeLabel.gd" id="6_43vqf"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_rm77l"]
-font_size = 55
+font_size = 30
 outline_size = 15
 outline_color = Color(0, 0, 0, 1)
 
@@ -35,16 +37,21 @@ unique_name_in_owner = true
 
 [node name="camera" type="Camera2D" parent="."]
 unique_name_in_owner = true
-offset = Vector2(840, 420)
+offset = Vector2(860, 250)
 script = ExtResource("2_bv0mh")
 
 [node name="ui" type="CanvasLayer" parent="."]
 
 [node name="info" type="Label" parent="ui"]
 z_index = 4096
-offset_right = 40.0
-offset_bottom = 23.0
-text = " ESCAPE for EXIT TO MENU"
+offset_left = 10.0
+offset_right = 443.0
+offset_bottom = 222.0
+text = "ESCAPE — exit to menu
+Left click — drag puzzles
+Right click — rotate puzzles
+WASD — camera movement
+Mouse wheel — camera zoom"
 label_settings = SubResource("LabelSettings_rm77l")
 
 [node name="hbox" type="HBoxContainer" parent="ui"]
@@ -102,23 +109,66 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="info" type="Label" parent="ui/victory/vbox"]
+[node name="vbox1" type="VBoxContainer" parent="ui/victory/vbox"]
 layout_mode = 2
 size_flags_vertical = 3
+
+[node name="info" type="Label" parent="ui/victory/vbox/vbox1"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
 text = "YOU WIN !!!"
 label_settings = SubResource("LabelSettings_tvgrn")
 horizontal_alignment = 1
-vertical_alignment = 1
+vertical_alignment = 2
 
-[node name="vbox" type="VBoxContainer" parent="ui/victory/vbox"]
+[node name="point" type="Control" parent="ui/victory/vbox/vbox1"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="timer_point" type="Control" parent="ui/victory/vbox/vbox1/point"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="vbox2" type="VBoxContainer" parent="ui/victory/vbox"]
 custom_minimum_size = Vector2(800, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 3
 theme_override_constants/separation = 20
 
-[node name="again" type="Button" parent="ui/victory/vbox/vbox"]
+[node name="again" type="Button" parent="ui/victory/vbox/vbox2"]
 layout_mode = 2
 text = "Again"
 
-[connection signal="pressed" from="ui/victory/vbox/vbox/again" to="." method="_on_again_pressed"]
+[node name="timer" type="Label" parent="ui"]
+unique_name_in_owner = true
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -42.0
+offset_right = 1.0
+grow_vertical = 0
+label_settings = SubResource("LabelSettings_rm77l")
+script = ExtResource("6_43vqf")
+
+[node name="screen" type="CanvasLayer" parent="."]
+layer = -128
+
+[node name="fon" type="ColorRect" parent="screen"]
+z_index = -2
+material = ExtResource("4_qcuf1")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+
+[connection signal="pressed" from="ui/victory/vbox/vbox2/again" to="." method="_on_again_pressed"]

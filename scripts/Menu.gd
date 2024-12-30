@@ -3,7 +3,7 @@ extends Node
 
 @onready var X : HSlider = %X
 @onready var Y : HSlider = %Y
-@onready var debug : CheckBox = %debug
+@onready var grid : CheckBox = %grid
 
 @onready var X_label : Label = %X_label
 @onready var Y_label : Label = %Y_label
@@ -14,7 +14,7 @@ func _ready() -> void:
 func update() -> void:
 	X.value = Main.size.x
 	Y.value = Main.size.y
-	debug.button_pressed = Main.debug
+	grid.button_pressed = Main.grid
 
 func _on_play_pressed() -> void:
 	Main.size = Vector2i(X.value, Y.value)
@@ -31,4 +31,4 @@ func _on_reset_pressed() -> void:
 	update()
 
 func _on_debug_toggled(toggled_on : bool) -> void:
-	Main.debug = toggled_on
+	Main.grid = toggled_on

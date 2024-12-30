@@ -26,7 +26,7 @@ func _ready() -> void:
 	_calculate_cell_centers()
 
 func _draw() -> void:
-	if Main.debug:
+	if Main.grid:
 		var grid_end_x := size.x * cell_size.x
 		var grid_end_y := size.y * cell_size.y
 		
@@ -37,6 +37,3 @@ func _draw() -> void:
 		for i in range(size.y + 1):
 			var y_position := i * cell_size.y
 			draw_line(Vector2(0, y_position), Vector2(grid_end_x, y_position), Color.WHITE)
-		
-		for center : Vector2 in cell_centers:
-			draw_circle(center, 3, Color.RED)

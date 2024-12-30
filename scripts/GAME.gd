@@ -7,6 +7,7 @@ extends Node
 @onready var puzzles_storage : Control = %puzzles_storage
 @onready var storage : Panel = %storage
 @onready var victory : Control = %victory
+@onready var timer : TimeLabel = %timer
 
 var num_puzzles : int
 
@@ -93,8 +94,11 @@ func _physics_process(_delta : float) -> void:
 	
 	for puzzle : Puzzle in z_puzzles:
 		if (left_click_pressed or right_click_pressed) and puzzle.get_rect().has_point(puzzle.get_local_mouse_position()) and not currently_dragged_puzzle:
+			if not timer.is_running:
+				timer.start()
 			currently_dragged_puzzle = puzzle
-			puzzle.set_z(2)
+			if (right_click_pressed and not puzzle.block) or left_click_pressed:
+				puzzle.set_z(2)
 			for p : Puzzle in z_puzzles:
 				if not p.block and not p == puzzle:
 					p.set_z(1)
@@ -163,9 +167,18 @@ func check() -> bool:
 
 func win() -> void:
 	set_physics_process(false)
+	timer.stop()
 	var tween := create_tween().set_trans(Tween.TransitionType.TRANS_SINE).set_ease(Tween.EaseType.EASE_IN)
 	tween.tween_property(storage, "global_position:x", get_viewport().size.x + storage.size.x, 1.0)
-	tween.tween_callback(victory.show)
+	tween.tween_callback(pok_win)
+
+func pok_win() -> void:
+	$ui/info.text = "ESCAPE — exit to menu"
+	victory.show()
+	await get_tree().physics_frame
+	await get_tree().physics_frame
+	var tween := create_tween().set_trans(Tween.TransitionType.TRANS_SINE).set_ease(Tween.EaseType.EASE_IN)
+	tween.tween_property(timer, "global_position", %victory/vbox/vbox1/point/timer_point.global_position - timer.size / 2, 2.0)
 
 func check_side_match(side_1 : Puzzle.Side, side_2 : Puzzle.Side) -> bool:
 	if side_1 == Puzzle.Side.Slot and side_2 == Puzzle.Side.Tab:
