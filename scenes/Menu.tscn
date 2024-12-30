@@ -1,7 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://dmoi8egpgdrjb"]
+[gd_scene load_steps=7 format=3 uid="uid://dmoi8egpgdrjb"]
 
 [ext_resource type="Script" path="res://scripts/Menu.gd" id="1_xvtuy"]
-[ext_resource type="Material" uid="uid://dj72mh5bhamaf" path="res://data/fon_material.tres" id="2_tyq73"]
 [ext_resource type="Texture2D" uid="uid://co0wbvsgu31rb" path="res://godot_icon.svg" id="3_c6fof"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_b1eln"]
@@ -34,15 +33,6 @@ offset_right = 347.0
 offset_bottom = 42.0
 text = "ESCAPE — exit to menu"
 label_settings = SubResource("LabelSettings_b1eln")
-
-[node name="fon" type="ColorRect" parent="."]
-material = ExtResource("2_tyq73")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(1, 1, 1, 0)
 
 [node name="godot" type="PanelContainer" parent="."]
 anchors_preset = 3
