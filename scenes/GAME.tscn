@@ -1,14 +1,17 @@
-[gd_scene load_steps=10 format=3 uid="uid://dx4sfs3ghkh8a"]
+[gd_scene load_steps=13 format=3 uid="uid://dx4sfs3ghkh8a"]
 
 [ext_resource type="Script" path="res://scripts/GAME.gd" id="1_tn0fk"]
 [ext_resource type="Script" path="res://scripts/Camera.gd" id="2_bv0mh"]
 [ext_resource type="PackedScene" uid="uid://m4c5csg3me2t" path="res://scenes/Board.tscn" id="2_unson"]
 [ext_resource type="Texture2D" uid="uid://cfbdgeaepjjt2" path="res://data/storage.png" id="4_gad56"]
+[ext_resource type="Material" uid="uid://dybb0lrvhqgu2" path="res://data/fon_material.tres" id="4_qcuf1"]
 [ext_resource type="Script" path="res://scripts/TimeLabel.gd" id="6_43vqf"]
+[ext_resource type="AudioStream" uid="uid://dx6vlpv2smud6" path="res://data/rotation.mp3" id="6_clfjk"]
+[ext_resource type="AudioStream" uid="uid://dmwm1vpopfpww" path="res://data/win.mp3" id="7_5orjq"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_rm77l"]
-font_size = 30
-outline_size = 15
+font_size = 26
+outline_size = 16
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3a8wa"]
@@ -39,14 +42,21 @@ unique_name_in_owner = true
 offset = Vector2(860, 250)
 script = ExtResource("2_bv0mh")
 
+[node name="rotation" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("6_clfjk")
+
+[node name="win" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_5orjq")
+
 [node name="ui" type="CanvasLayer" parent="."]
 
 [node name="info" type="Label" parent="ui"]
 z_index = 4096
 offset_left = 10.0
-offset_right = 443.0
-offset_bottom = 222.0
-text = "ESCAPE — exit to menu
+offset_right = 397.0
+offset_bottom = 192.0
+text = "ESCAPE — hold to exit to menu
 Left click — drag puzzles
 Right click — rotate puzzles
 WASD — camera movement
@@ -146,6 +156,10 @@ theme_override_constants/separation = 20
 layout_mode = 2
 text = "Again"
 
+[node name="menu" type="Button" parent="ui/victory/vbox/vbox2"]
+layout_mode = 2
+text = "Exit to menu"
+
 [node name="timer" type="Label" parent="ui"]
 unique_name_in_owner = true
 anchors_preset = 2
@@ -157,4 +171,17 @@ grow_vertical = 0
 label_settings = SubResource("LabelSettings_rm77l")
 script = ExtResource("6_43vqf")
 
+[node name="screen" type="CanvasLayer" parent="."]
+layer = -128
+
+[node name="fon" type="ColorRect" parent="screen"]
+material = ExtResource("4_qcuf1")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+
 [connection signal="pressed" from="ui/victory/vbox/vbox2/again" to="." method="_on_again_pressed"]
+[connection signal="pressed" from="ui/victory/vbox/vbox2/menu" to="." method="_on_menu_pressed"]

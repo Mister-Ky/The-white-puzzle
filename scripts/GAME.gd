@@ -9,13 +9,33 @@ extends Node
 @onready var victory : Control = %victory
 @onready var timer : TimeLabel = %timer
 
+@onready var rotation : AudioStreamPlayer = %rotation
+
 var num_puzzles : int
 
 var currently_dragged_puzzle : Puzzle = null
 
 @onready var z_puzzles : Array[Puzzle] = []
 
-func set_sides():
+func set_sides() -> void:
+	for y in range(board.size.y):
+		for x in range(board.size.x):
+			var puzzle := z_puzzles[y * board.size.x + x]
+			
+			if y > 0:
+				puzzle.top_side = Puzzle.Side.Tab
+				z_puzzles[(y - 1) * board.size.x + x].bottom_side = Puzzle.Side.Slot
+			if y < board.size.y - 1:
+				puzzle.bottom_side = Puzzle.Side.Tab
+				z_puzzles[(y + 1) * board.size.x + x].top_side = Puzzle.Side.Slot
+			if x > 0:
+				puzzle.left_side = Puzzle.Side.Tab
+				z_puzzles[y * board.size.x + (x - 1)].right_side = Puzzle.Side.Slot
+			if x < board.size.x - 1:
+				puzzle.right_side = Puzzle.Side.Tab
+				z_puzzles[y * board.size.x + (x + 1)].left_side = Puzzle.Side.Slot
+
+func set_sides_hard() -> void:
 	for y in range(board.size.y):
 		for x in range(board.size.x):
 			var puzzle := z_puzzles[y * board.size.x + x]
@@ -44,7 +64,10 @@ func _ready() -> void:
 		var rotations := [0, 90, 180, 270]
 		puzzle.rotation_degrees = rotations[randi() % rotations.size()]
 		z_puzzles.append(puzzle)
-	set_sides()
+	if Main.hard:
+		set_sides_hard()
+	else:
+		set_sides()
 	for p : Puzzle in z_puzzles:
 		p.create()
 		p.set_z(1)
@@ -114,6 +137,7 @@ func _physics_process(_delta : float) -> void:
 				z_puzzles.sort_custom(sort_puzzles)
 		if right_click_pressed and currently_dragged_puzzle == puzzle:
 			set_physics_process(false)
+			rotation.play()
 			var tween := create_tween().set_trans(Tween.TransitionType.TRANS_SINE).set_ease(Tween.EaseType.EASE_IN)
 			tween.tween_property(puzzle, "rotation_degrees", puzzle.rotation_degrees + 90, 0.2)
 			tween.tween_callback(rot)
@@ -173,8 +197,9 @@ func win() -> void:
 	tween.tween_callback(pok_win)
 
 func pok_win() -> void:
-	$ui/info.text = "ESCAPE — exit to menu"
+	$ui/info.text = "ESCAPE — hold to exit to menu"
 	victory.show()
+	$win.play()
 	await get_tree().physics_frame
 	await get_tree().physics_frame
 	var tween := create_tween().set_trans(Tween.TransitionType.TRANS_SINE).set_ease(Tween.EaseType.EASE_IN)
@@ -189,3 +214,41 @@ func check_side_match(side_1 : Puzzle.Side, side_2 : Puzzle.Side) -> bool:
 
 func _on_again_pressed() -> void:
 	get_tree().reload_current_scene()
+
+func _on_menu_pressed() -> void:
+	get_tree().change_scene_to_file("res://scenes/Menu.tscn")
+
+
+
+
+func set_info(text : String) -> void:
+	$ui/info.text = text
+
+func return_info() -> void:
+	$ui/info.text = """ESCAPE — hold to exit to menu
+	Left click — drag puzzles
+	Right click — rotate puzzles
+	WASD — camera movement
+	Mouse wheel — camera zoom"""
+
+var hold_time := 1.5
+var time_held := 0.0
+var is_key_held := false
+func _process(delta : float) -> void:
+	if Input.is_action_pressed("ui_cancel"):
+		if is_key_held:
+			time_held += delta
+		else:
+			is_key_held = true
+			time_held = 0.0
+		
+		set_info("EXIT" + ".".repeat(int(time_held / 0.5) + 1))
+		
+		if time_held >= hold_time:
+			get_tree().change_scene_to_file("res://scenes/Menu.tscn")
+			is_key_held = false
+			time_held = 0.0
+	else:
+		is_key_held = false
+		time_held = 0.0
+		return_info()

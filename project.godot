@@ -16,12 +16,12 @@ run/main_scene="res://scenes/Menu.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/show_image=false
-config/icon="res://godot_icon.svg"
+config/icon="res://icon.png"
 
 [autoload]
 
 Main="*res://scripts/Main.gd"
-DebugMenu="*res://addons/debug-menu/debug_menu.tscn"
+Music="res://scenes/Music.tscn"
 
 [display]
 
@@ -31,14 +31,9 @@ window/size/mode=3
 window/stretch/mode="viewport"
 window/stretch/aspect="ignore"
 
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/debug-menu/plugin.cfg")
-
 [file_customization]
 
 folder_colors={
-"res://addons/": "gray",
 "res://data/": "green",
 "res://scenes/": "blue",
 "res://scripts/": "red"

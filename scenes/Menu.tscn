@@ -1,12 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://dmoi8egpgdrjb"]
 
 [ext_resource type="Script" path="res://scripts/Menu.gd" id="1_xvtuy"]
+[ext_resource type="Material" uid="uid://dybb0lrvhqgu2" path="res://data/fon_material.tres" id="2_tyq73"]
 [ext_resource type="Texture2D" uid="uid://co0wbvsgu31rb" path="res://godot_icon.svg" id="3_c6fof"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_b1eln"]
-font_size = 30
-outline_size = 15
-outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_k4k1x"]
 font_size = 45
@@ -26,13 +22,14 @@ Label/font_sizes/font_size = 50
 [node name="Menu" type="Node"]
 script = ExtResource("1_xvtuy")
 
-[node name="info" type="Label" parent="."]
-z_index = 4096
-offset_left = 10.0
-offset_right = 347.0
-offset_bottom = 42.0
-text = "ESCAPE — exit to menu"
-label_settings = SubResource("LabelSettings_b1eln")
+[node name="fon" type="ColorRect" parent="."]
+material = ExtResource("2_tyq73")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
 
 [node name="godot" type="MarginContainer" parent="."]
 offset_left = 1552.0
@@ -94,7 +91,7 @@ theme_override_constants/separation = 30
 
 [node name="play" type="Button" parent="margin/vbox/margin/vbox"]
 layout_mode = 2
-text = "PLAY"
+text = "Play"
 
 [node name="X_label" type="Label" parent="margin/vbox/margin/vbox"]
 unique_name_in_owner = true
@@ -105,7 +102,7 @@ text = "X : 10"
 unique_name_in_owner = true
 layout_mode = 2
 min_value = 1.0
-max_value = 256.0
+max_value = 128.0
 value = 10.0
 
 [node name="Y_label" type="Label" parent="margin/vbox/margin/vbox"]
@@ -117,20 +114,40 @@ text = "Y : 10"
 unique_name_in_owner = true
 layout_mode = 2
 min_value = 1.0
-max_value = 256.0
+max_value = 128.0
 value = 10.0
 
 [node name="reset" type="Button" parent="margin/vbox/margin/vbox"]
 layout_mode = 2
-text = "RESET"
+text = "Reset"
 
-[node name="grid" type="CheckBox" parent="margin/vbox/margin/vbox"]
+[node name="exit" type="Button" parent="margin/vbox/margin/vbox"]
+layout_mode = 2
+text = "EXIT"
+
+[node name="hbox" type="HBoxContainer" parent="margin/vbox/margin/vbox"]
+layout_mode = 2
+
+[node name="grid" type="CheckBox" parent="margin/vbox/margin/vbox/hbox"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Show the grid"
+
+[node name="separator" type="VSeparator" parent="margin/vbox/margin/vbox/hbox"]
+layout_mode = 2
+
+[node name="hard" type="CheckBox" parent="margin/vbox/margin/vbox/hbox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+text = "Hard"
 
 [connection signal="pressed" from="margin/vbox/margin/vbox/play" to="." method="_on_play_pressed"]
 [connection signal="value_changed" from="margin/vbox/margin/vbox/X" to="." method="_on_x_value_changed"]
 [connection signal="value_changed" from="margin/vbox/margin/vbox/Y" to="." method="_on_y_value_changed"]
 [connection signal="pressed" from="margin/vbox/margin/vbox/reset" to="." method="_on_reset_pressed"]
-[connection signal="toggled" from="margin/vbox/margin/vbox/grid" to="." method="_on_debug_toggled"]
+[connection signal="pressed" from="margin/vbox/margin/vbox/exit" to="." method="_on_exit_pressed"]
+[connection signal="toggled" from="margin/vbox/margin/vbox/hbox/grid" to="." method="_on_grid_toggled"]
+[connection signal="toggled" from="margin/vbox/margin/vbox/hbox/hard" to="." method="_on_hard_toggled"]

@@ -4,17 +4,20 @@ extends Node
 @onready var X : HSlider = %X
 @onready var Y : HSlider = %Y
 @onready var grid : CheckBox = %grid
+@onready var hard : CheckBox = %hard
 
 @onready var X_label : Label = %X_label
 @onready var Y_label : Label = %Y_label
 
 func _ready() -> void:
 	update()
+	Main.setBusVolumeDB(1.0)
 
 func update() -> void:
 	X.value = Main.size.x
 	Y.value = Main.size.y
 	grid.button_pressed = Main.grid
+	hard.button_pressed = Main.hard
 
 func _on_play_pressed() -> void:
 	Main.size = Vector2i(X.value, Y.value)
@@ -30,5 +33,11 @@ func _on_reset_pressed() -> void:
 	Main.size = Vector2i(10, 10)
 	update()
 
-func _on_debug_toggled(toggled_on : bool) -> void:
+func _on_exit_pressed() -> void:
+	Main.exit(0)
+
+func _on_grid_toggled(toggled_on : bool) -> void:
 	Main.grid = toggled_on
+
+func _on_hard_toggled(toggled_on : bool) -> void:
+	Main.hard = toggled_on

@@ -13,10 +13,11 @@ const cell_size := Vector2i(64, 64)
 var size := Vector2i(10, 10)
 # Тоже но с сеткой
 var grid := false
+# И со сложностью
+var hard := false
 
 func _ready() -> void:
-	if OS.has_feature("editor"):
-		grid = true
+	setBusVolumeDB(0.0)
 
 func set_fullscreen(value : bool) -> void:
 	if value:
@@ -24,13 +25,12 @@ func set_fullscreen(value : bool) -> void:
 	else:
 		get_window().mode = Window.MODE_WINDOWED
 
+## Настройка аудио колонки.
+func setBusVolumeDB(value : float, bus_name : StringName = &"Master") -> void:
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index(bus_name), linear_to_db(value))
+
 func _unhandled_input(event : InputEvent) -> void:
-	if event.is_action_pressed("ui_cancel"):
-		if get_tree().current_scene is Menu:
-			exit()
-		elif get_tree().current_scene is GAME:
-			get_tree().change_scene_to_file("res://scenes/Menu.tscn")
-	elif event.is_action_pressed("toggle_fullscreen"):
+	if event.is_action_pressed("toggle_fullscreen"):
 		set_fullscreen(not get_window().mode == Window.MODE_FULLSCREEN)
 
 func exit(exit_code : int = 0) -> void:

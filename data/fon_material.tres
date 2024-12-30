@@ -1,0 +1,6 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dybb0lrvhqgu2"]
+
+[ext_resource type="Shader" path="res://data/fon.gdshader" id="1_neq4s"]
+
+[resource]
+shader = ExtResource("1_neq4s")
