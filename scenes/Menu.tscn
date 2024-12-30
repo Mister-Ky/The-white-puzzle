@@ -1,11 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://dmoi8egpgdrjb"]
+[gd_scene load_steps=8 format=3 uid="uid://dmoi8egpgdrjb"]
 
 [ext_resource type="Script" path="res://scripts/Menu.gd" id="1_xvtuy"]
 [ext_resource type="Material" uid="uid://dj72mh5bhamaf" path="res://data/fon_material.tres" id="2_tyq73"]
+[ext_resource type="Texture2D" uid="uid://co0wbvsgu31rb" path="res://godot_icon.svg" id="3_c6fof"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_b1eln"]
 font_size = 30
 outline_size = 15
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_k4k1x"]
+font_size = 45
+outline_size = 30
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_ape0v"]
@@ -38,6 +44,37 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 1, 1, 0)
 
+[node name="godot" type="PanelContainer" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -348.0
+offset_top = -195.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="margin" type="MarginContainer" parent="godot"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="vbox" type="VBoxContainer" parent="godot/margin"]
+layout_mode = 2
+
+[node name="godot_icon" type="TextureRect" parent="godot/margin/vbox"]
+layout_mode = 2
+texture = ExtResource("3_c6fof")
+stretch_mode = 3
+
+[node name="label" type="Label" parent="godot/margin/vbox"]
+layout_mode = 2
+text = "Made in GODOT"
+label_settings = SubResource("LabelSettings_k4k1x")
+
 [node name="margin" type="MarginContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
@@ -47,7 +84,6 @@ grow_vertical = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
 
 [node name="vbox" type="VBoxContainer" parent="margin"]
 layout_mode = 2
