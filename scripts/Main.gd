@@ -5,6 +5,10 @@ const CONLINE := "----------------------------------------" # 40
 
 const cell_size := Vector2i(64, 64)
 
+@onready var none := load("res://data/none.png")
+@onready var slot := load("res://data/slot.png")
+@onready var tab := load("res://data/tab.png")
+
 # Нужен чтобы из меню в игру перевести настройки
 var size := Vector2i(10, 10)
 # Тоже но с дебагом

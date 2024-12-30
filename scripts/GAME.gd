@@ -12,16 +12,40 @@ var num_puzzles : int
 
 var currently_dragged_puzzle : Puzzle = null
 
-@onready var z_puzzles := []
+@onready var z_puzzles : Array[Puzzle] = []
+
+func set_sides():
+	for y in range(board.size.y):
+		for x in range(board.size.x):
+			var puzzle := z_puzzles[y * board.size.x + x]
+			
+			if y > 0:
+				puzzle.top_side = Puzzle.Side.Tab
+				z_puzzles[(y - 1) * board.size.x + x].bottom_side = Puzzle.Side.Slot
+			if y < board.size.y - 1:
+				puzzle.bottom_side = Puzzle.Side.Tab
+				z_puzzles[(y + 1) * board.size.x + x].top_side = Puzzle.Side.Slot
+			if x > 0:
+				puzzle.left_side = Puzzle.Side.Tab
+				z_puzzles[y * board.size.x + (x - 1)].right_side = Puzzle.Side.Slot
+			if x < board.size.x - 1:
+				puzzle.right_side = Puzzle.Side.Tab
+				z_puzzles[y * board.size.x + (x + 1)].left_side = Puzzle.Side.Slot
+	
+	for p : Puzzle in z_puzzles:
+		p.create()
+		p.set_z(1)
 
 func _ready() -> void:
 	victory.hide()
 	num_puzzles = board.size.x * board.size.y
 	for i in range(num_puzzles):
 		var puzzle := Puzzle.new()
+		puzzle.name = str(i)
 		puzzles_storage.add_child(puzzle)
 		puzzle.position = Vector2(randi() % int(puzzles_storage.size.x - puzzle.texture.get_size().x), randi() % int(puzzles_storage.size.y - puzzle.texture.get_size().y)) + puzzle.texture.get_size() / 2
 		z_puzzles.append(puzzle)
+	set_sides()
 	z_puzzles.sort_custom(sort_puzzles)
 
 func sort_puzzles(a : Puzzle, b : Puzzle) -> bool:
@@ -49,7 +73,7 @@ func move_puzzle(puzzle : Puzzle) -> void:
 	if (puzzle.get_rect().has_point(nearest_point - puzzle.global_position)) and (not is_cell_occupied(nearest_point)):
 		puzzle.global_position = nearest_point
 		puzzle.block = true
-		puzzle.z_index = 0
+		puzzle.set_z(0)
 		z_puzzles.sort_custom(sort_puzzles)
 
 func _physics_process(_delta : float) -> void:
@@ -62,10 +86,10 @@ func _physics_process(_delta : float) -> void:
 		if (left_click_pressed or right_click_pressed) and puzzle.get_rect().has_point(puzzle.get_local_mouse_position()) and not currently_dragged_puzzle:
 			currently_dragged_puzzle = puzzle
 			if not puzzle.block:
-				puzzle.z_index = 2
+				puzzle.set_z(2)
 			for p : Puzzle in z_puzzles:
 				if not p.block and not p == puzzle:
-					p.z_index = 1
+					p.set_z(1)
 			z_puzzles.sort_custom(sort_puzzles)
 		elif (left_click_released or right_click_released) and currently_dragged_puzzle == puzzle:
 			if left_click_released:

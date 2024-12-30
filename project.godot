@@ -115,5 +115,6 @@ pointing/emulate_touch_from_mouse=true
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 environment/defaults/default_clear_color=Color(0.20871, 0.20871, 0.20871, 1)
 viewport/hdr_2d=true
