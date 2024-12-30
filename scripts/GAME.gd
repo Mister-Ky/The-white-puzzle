@@ -31,10 +31,6 @@ func set_sides():
 			if x < board.size.x - 1:
 				puzzle.right_side = Puzzle.Side.Tab
 				z_puzzles[y * board.size.x + (x + 1)].left_side = Puzzle.Side.Slot
-	
-	for p : Puzzle in z_puzzles:
-		p.create()
-		p.set_z(1)
 
 func _ready() -> void:
 	victory.hide()
@@ -44,14 +40,27 @@ func _ready() -> void:
 		puzzle.name = str(i)
 		puzzles_storage.add_child(puzzle)
 		puzzle.position = Vector2(randi() % int(puzzles_storage.size.x - puzzle.texture.get_size().x), randi() % int(puzzles_storage.size.y - puzzle.texture.get_size().y)) + puzzle.texture.get_size() / 2
+		var rotations := [0, 90, 180, 270]
+		puzzle.rotation_degrees = rotations[randi() % rotations.size()]
 		z_puzzles.append(puzzle)
 	set_sides()
+	for p : Puzzle in z_puzzles:
+		p.create()
+		p.set_z(1)
 	z_puzzles.sort_custom(sort_puzzles)
 
 func sort_puzzles(a : Puzzle, b : Puzzle) -> bool:
 	if not a.z_index == b.z_index:
 		return a.z_index > b.z_index
 	return a.get_index() > b.get_index()
+
+func sort_pos_puzzles(a : Puzzle, b : Puzzle) -> bool:
+	if a.global_position.y < b.global_position.y:
+		return true
+	elif a.global_position.y == b.global_position.y:
+		if a.global_position.x < b.global_position.x:
+			return true
+	return false
 
 func is_cell_occupied(cell_position : Vector2) -> bool:
 	for puzzle : Puzzle in z_puzzles:
@@ -85,8 +94,7 @@ func _physics_process(_delta : float) -> void:
 	for puzzle : Puzzle in z_puzzles:
 		if (left_click_pressed or right_click_pressed) and puzzle.get_rect().has_point(puzzle.get_local_mouse_position()) and not currently_dragged_puzzle:
 			currently_dragged_puzzle = puzzle
-			if not puzzle.block:
-				puzzle.set_z(2)
+			puzzle.set_z(2)
 			for p : Puzzle in z_puzzles:
 				if not p.block and not p == puzzle:
 					p.set_z(1)
@@ -98,6 +106,8 @@ func _physics_process(_delta : float) -> void:
 			if check():
 				win()
 				return
+			else:
+				z_puzzles.sort_custom(sort_puzzles)
 		if right_click_pressed and currently_dragged_puzzle == puzzle:
 			set_physics_process(false)
 			var tween := create_tween().set_trans(Tween.TransitionType.TRANS_SINE).set_ease(Tween.EaseType.EASE_IN)
@@ -130,6 +140,24 @@ func check() -> bool:
 	for p : Puzzle in z_puzzles:
 		if p.block: blocked += 1
 	if blocked == num_puzzles:
+		if num_puzzles == 1: return true
+		z_puzzles.sort_custom(sort_pos_puzzles)
+		for y in range(board.size.y):
+			for x in range(board.size.x):
+				var puzzle := z_puzzles[y * board.size.x + x]
+				
+				if y > 0:
+					if not check_side_match(puzzle.get_rotated_sides()["top"], z_puzzles[(y - 1) * board.size.x + x].get_rotated_sides()["bottom"]):
+						return false
+				if y < board.size.y - 1:
+					if not check_side_match(puzzle.get_rotated_sides()["bottom"], z_puzzles[(y + 1) * board.size.x + x].get_rotated_sides()["top"]):
+						return false
+				if x > 0:
+					if not check_side_match(puzzle.get_rotated_sides()["left"], z_puzzles[y * board.size.x + (x - 1)].get_rotated_sides()["right"]):
+						return false
+				if x < board.size.x - 1:
+					if not check_side_match(puzzle.get_rotated_sides()["right"], z_puzzles[y * board.size.x + (x + 1)].get_rotated_sides()["left"]):
+						return false
 		return true
 	return false
 
@@ -138,6 +166,13 @@ func win() -> void:
 	var tween := create_tween().set_trans(Tween.TransitionType.TRANS_SINE).set_ease(Tween.EaseType.EASE_IN)
 	tween.tween_property(storage, "global_position:x", get_viewport().size.x + storage.size.x, 1.0)
 	tween.tween_callback(victory.show)
+
+func check_side_match(side_1 : Puzzle.Side, side_2 : Puzzle.Side) -> bool:
+	if side_1 == Puzzle.Side.Slot and side_2 == Puzzle.Side.Tab:
+		return true
+	if side_1 == Puzzle.Side.Tab and side_2 == Puzzle.Side.Slot:
+		return true
+	return side_1 == Puzzle.Side.None and side_2 == Puzzle.Side.None
 
 func _on_again_pressed() -> void:
 	get_tree().reload_current_scene()

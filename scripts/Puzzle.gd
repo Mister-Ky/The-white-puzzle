@@ -74,3 +74,30 @@ func get_texture_side(side : Puzzle.Side) -> Texture2D:
 			return Main.tab
 		_:
 			return null
+
+func get_rotated_sides() -> Dictionary:
+	var sides := {}
+	match int(rotation_degrees) % 360:
+		0:
+			sides["top"] = top_side
+			sides["right"] = right_side
+			sides["bottom"] = bottom_side
+			sides["left"] = left_side
+		90:
+			sides["top"] = left_side
+			sides["right"] = top_side
+			sides["bottom"] = right_side
+			sides["left"] = bottom_side
+		180:
+			sides["top"] = bottom_side
+			sides["right"] = left_side
+			sides["bottom"] = top_side
+			sides["left"] = right_side
+		270:
+			sides["top"] = right_side
+			sides["right"] = bottom_side
+			sides["bottom"] = left_side
+			sides["left"] = top_side
+		_:
+			return sides
+	return sides
