@@ -41,17 +41,33 @@ func set_sides_hard() -> void:
 			var puzzle := z_puzzles[y * board.size.x + x]
 			
 			if y > 0:
-				puzzle.top_side = Puzzle.Side.Tab
-				z_puzzles[(y - 1) * board.size.x + x].bottom_side = Puzzle.Side.Slot
+				if randi() % 2 == 0:
+					puzzle.top_side = Puzzle.Side.Tab
+					z_puzzles[(y - 1) * board.size.x + x].bottom_side = Puzzle.Side.Slot
+				else:
+					puzzle.top_side = Puzzle.Side.Slot
+					z_puzzles[(y - 1) * board.size.x + x].bottom_side = Puzzle.Side.Tab
 			if y < board.size.y - 1:
-				puzzle.bottom_side = Puzzle.Side.Tab
-				z_puzzles[(y + 1) * board.size.x + x].top_side = Puzzle.Side.Slot
+				if randi() % 2 == 0:
+					puzzle.bottom_side = Puzzle.Side.Tab
+					z_puzzles[(y + 1) * board.size.x + x].top_side = Puzzle.Side.Slot
+				else:
+					puzzle.bottom_side = Puzzle.Side.Slot
+					z_puzzles[(y + 1) * board.size.x + x].top_side = Puzzle.Side.Tab
 			if x > 0:
-				puzzle.left_side = Puzzle.Side.Tab
-				z_puzzles[y * board.size.x + (x - 1)].right_side = Puzzle.Side.Slot
+				if randi() % 2 == 0:
+					puzzle.left_side = Puzzle.Side.Tab
+					z_puzzles[y * board.size.x + (x - 1)].right_side = Puzzle.Side.Slot
+				else:
+					puzzle.left_side = Puzzle.Side.Slot
+					z_puzzles[y * board.size.x + (x - 1)].right_side = Puzzle.Side.Tab
 			if x < board.size.x - 1:
-				puzzle.right_side = Puzzle.Side.Tab
-				z_puzzles[y * board.size.x + (x + 1)].left_side = Puzzle.Side.Slot
+				if randi() % 2 == 0:
+					puzzle.right_side = Puzzle.Side.Tab
+					z_puzzles[y * board.size.x + (x + 1)].left_side = Puzzle.Side.Slot
+				else:
+					puzzle.right_side = Puzzle.Side.Slot
+					z_puzzles[y * board.size.x + (x + 1)].left_side = Puzzle.Side.Tab
 
 func _ready() -> void:
 	victory.hide()
@@ -65,7 +81,6 @@ func _ready() -> void:
 		var rotations := [0, 90, 180, 270]
 		puzzle.rotation_degrees = rotations[randi() % rotations.size()]
 		z_puzzles.append(puzzle)
-	if num_puzzles == 1: return
 	if Main.hard:
 		set_sides_hard()
 	else:
@@ -199,7 +214,6 @@ func win() -> void:
 	tween.tween_callback(pok_win)
 
 func pok_win() -> void:
-	$ui/info.text = "ESCAPE — hold to exit to menu"
 	victory.show()
 	$win.play()
 	await get_tree().physics_frame
