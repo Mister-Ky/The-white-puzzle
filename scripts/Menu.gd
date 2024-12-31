@@ -5,29 +5,37 @@ extends Node
 @onready var Y : HSlider = %Y
 @onready var grid : CheckBox = %grid
 @onready var hard : CheckBox = %hard
+@onready var master : HSlider = %master
+@onready var music : HSlider = %music
+@onready var sfx : HSlider = %sfx
 
 @onready var X_label : Label = %X_label
 @onready var Y_label : Label = %Y_label
 
 func _ready() -> void:
 	update()
-	Main.setBusVolumeDB(1.0)
+	grid.button_pressed = Main.grid
+	hard.button_pressed = Main.hard
+	master.value = Main.master
+	_on_master_value_changed(master.value)
+	music.value = Main.music
+	_on_music_value_changed(music.value)
+	sfx.value = Main.sfx
+	_on_sfx_value_changed(sfx.value)
 
 func update() -> void:
 	X.value = Main.size.x
 	Y.value = Main.size.y
-	grid.button_pressed = Main.grid
-	hard.button_pressed = Main.hard
 
 func _on_play_pressed() -> void:
 	Main.size = Vector2i(X.value, Y.value)
 	get_tree().change_scene_to_file("res://scenes/GAME.tscn")
 
 func _on_x_value_changed(value : float) -> void:
-	X_label.text = "X : " + str(value)
+	X_label.text = "Width : " + str(value)
 
 func _on_y_value_changed(value : float) -> void:
-	Y_label.text = "Y : " + str(value)
+	Y_label.text = "Height : " + str(value)
 
 func _on_reset_pressed() -> void:
 	Main.size = Vector2i(10, 10)
@@ -41,3 +49,18 @@ func _on_grid_toggled(toggled_on : bool) -> void:
 
 func _on_hard_toggled(toggled_on : bool) -> void:
 	Main.hard = toggled_on
+
+func _on_master_value_changed(value : float) -> void:
+	Main.master = value
+	Main.setBusVolumeDB(Main.master)
+
+func _on_music_value_changed(value : float) -> void:
+	Main.music = value
+	Main.setBusVolumeDB(Main.music, "music")
+
+func _on_sfx_value_changed(value : float) -> void:
+	Main.sfx = value
+	Main.setBusVolumeDB(Main.sfx, "sfx")
+
+func _on_godot_icon_pressed() -> void:
+	OS.shell_open("https://godotengine.org/")

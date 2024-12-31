@@ -39,15 +39,16 @@ unique_name_in_owner = true
 
 [node name="camera" type="Camera2D" parent="."]
 unique_name_in_owner = true
-offset = Vector2(860, 250)
 script = ExtResource("2_bv0mh")
 
 [node name="rotation" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("6_clfjk")
+bus = &"sfx"
 
 [node name="win" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_5orjq")
+bus = &"sfx"
 
 [node name="ui" type="CanvasLayer" parent="."]
 

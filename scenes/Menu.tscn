@@ -1,13 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dmoi8egpgdrjb"]
+[gd_scene load_steps=8 format=3 uid="uid://dmoi8egpgdrjb"]
 
 [ext_resource type="Script" path="res://scripts/Menu.gd" id="1_xvtuy"]
 [ext_resource type="Material" uid="uid://dybb0lrvhqgu2" path="res://data/fon_material.tres" id="2_tyq73"]
 [ext_resource type="Texture2D" uid="uid://co0wbvsgu31rb" path="res://godot_icon.svg" id="3_c6fof"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_k4k1x"]
-font_size = 45
-outline_size = 30
-outline_color = Color(0, 0, 0, 1)
+[ext_resource type="Texture2D" uid="uid://bpc60vbpyw17g" path="res://icon.svg" id="4_ml05b"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ape0v"]
 font_size = 60
@@ -18,6 +14,11 @@ outline_color = Color(0, 0, 0, 1)
 Button/font_sizes/font_size = 50
 CheckBox/font_sizes/font_size = 40
 Label/font_sizes/font_size = 50
+
+[sub_resource type="LabelSettings" id="LabelSettings_k4k1x"]
+font_size = 45
+outline_size = 30
+outline_color = Color(0, 0, 0, 1)
 
 [node name="Menu" type="Node"]
 script = ExtResource("1_xvtuy")
@@ -31,30 +32,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0)
 
-[node name="godot" type="MarginContainer" parent="."]
-offset_left = 1552.0
-offset_top = 865.0
-offset_right = 1920.0
-offset_bottom = 1080.0
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="vbox" type="VBoxContainer" parent="godot"]
-layout_mode = 2
-
-[node name="godot_icon" type="TextureRect" parent="godot/vbox"]
-layout_mode = 2
-texture = ExtResource("3_c6fof")
-stretch_mode = 3
-
-[node name="label" type="Label" parent="godot/vbox"]
-layout_mode = 2
-text = "Made in GODOT"
-label_settings = SubResource("LabelSettings_k4k1x")
-
-[node name="margin" type="MarginContainer" parent="."]
+[node name="main" type="MarginContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -64,10 +42,20 @@ theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 
-[node name="vbox" type="VBoxContainer" parent="margin"]
+[node name="vbox" type="VBoxContainer" parent="main"]
 layout_mode = 2
 
-[node name="title" type="Label" parent="margin/vbox"]
+[node name="logo" type="HBoxContainer" parent="main/vbox"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+
+[node name="logo" type="TextureRect" parent="main/vbox/logo"]
+layout_mode = 2
+texture = ExtResource("4_ml05b")
+stretch_mode = 3
+
+[node name="title" type="Label" parent="main/vbox/logo"]
 layout_mode = 2
 size_flags_vertical = 3
 text = "The white puzzle"
@@ -75,12 +63,12 @@ label_settings = SubResource("LabelSettings_ape0v")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="margin" type="MarginContainer" parent="margin/vbox"]
+[node name="margin" type="MarginContainer" parent="main/vbox"]
 layout_mode = 2
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="vbox" type="VBoxContainer" parent="margin/vbox/margin"]
+[node name="vbox" type="VBoxContainer" parent="main/vbox/margin"]
 custom_minimum_size = Vector2(800, 0)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -89,65 +77,152 @@ size_flags_stretch_ratio = 2.0
 theme = SubResource("Theme_eyyvc")
 theme_override_constants/separation = 30
 
-[node name="play" type="Button" parent="margin/vbox/margin/vbox"]
+[node name="play" type="Button" parent="main/vbox/margin/vbox"]
 layout_mode = 2
 text = "Play"
 
-[node name="X_label" type="Label" parent="margin/vbox/margin/vbox"]
+[node name="X_label" type="Label" parent="main/vbox/margin/vbox"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "X : 10"
+text = "Width : 10"
 
-[node name="X" type="HSlider" parent="margin/vbox/margin/vbox"]
-unique_name_in_owner = true
-layout_mode = 2
-min_value = 1.0
-max_value = 128.0
-value = 10.0
-
-[node name="Y_label" type="Label" parent="margin/vbox/margin/vbox"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Y : 10"
-
-[node name="Y" type="HSlider" parent="margin/vbox/margin/vbox"]
+[node name="X" type="HSlider" parent="main/vbox/margin/vbox"]
 unique_name_in_owner = true
 layout_mode = 2
 min_value = 1.0
 max_value = 128.0
 value = 10.0
 
-[node name="reset" type="Button" parent="margin/vbox/margin/vbox"]
+[node name="Y_label" type="Label" parent="main/vbox/margin/vbox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Height : 10"
+
+[node name="Y" type="HSlider" parent="main/vbox/margin/vbox"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 1.0
+max_value = 128.0
+value = 10.0
+
+[node name="reset" type="Button" parent="main/vbox/margin/vbox"]
 layout_mode = 2
 text = "Reset"
 
-[node name="exit" type="Button" parent="margin/vbox/margin/vbox"]
+[node name="exit" type="Button" parent="main/vbox/margin/vbox"]
 layout_mode = 2
 text = "EXIT"
 
-[node name="hbox" type="HBoxContainer" parent="margin/vbox/margin/vbox"]
+[node name="hbox" type="HBoxContainer" parent="main/vbox/margin/vbox"]
 layout_mode = 2
 
-[node name="grid" type="CheckBox" parent="margin/vbox/margin/vbox/hbox"]
+[node name="grid" type="CheckBox" parent="main/vbox/margin/vbox/hbox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Show the grid"
 
-[node name="separator" type="VSeparator" parent="margin/vbox/margin/vbox/hbox"]
+[node name="separator" type="VSeparator" parent="main/vbox/margin/vbox/hbox"]
 layout_mode = 2
 
-[node name="hard" type="CheckBox" parent="margin/vbox/margin/vbox/hbox"]
+[node name="hard" type="CheckBox" parent="main/vbox/margin/vbox/hbox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 text = "Hard"
 
-[connection signal="pressed" from="margin/vbox/margin/vbox/play" to="." method="_on_play_pressed"]
-[connection signal="value_changed" from="margin/vbox/margin/vbox/X" to="." method="_on_x_value_changed"]
-[connection signal="value_changed" from="margin/vbox/margin/vbox/Y" to="." method="_on_y_value_changed"]
-[connection signal="pressed" from="margin/vbox/margin/vbox/reset" to="." method="_on_reset_pressed"]
-[connection signal="pressed" from="margin/vbox/margin/vbox/exit" to="." method="_on_exit_pressed"]
-[connection signal="toggled" from="margin/vbox/margin/vbox/hbox/grid" to="." method="_on_grid_toggled"]
-[connection signal="toggled" from="margin/vbox/margin/vbox/hbox/hard" to="." method="_on_hard_toggled"]
+[node name="audio" type="MarginContainer" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -472.0
+offset_right = 329.0
+grow_vertical = 0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = -20
+
+[node name="vbox" type="VBoxContainer" parent="audio"]
+layout_mode = 2
+
+[node name="master_label" type="Label" parent="audio/vbox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "Master Volume"
+
+[node name="master" type="HSlider" parent="audio/vbox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+max_value = 2.0
+step = 0.01
+value = 1.0
+
+[node name="music_label" type="Label" parent="audio/vbox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "Music Volume"
+
+[node name="music" type="HSlider" parent="audio/vbox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+max_value = 2.0
+step = 0.01
+value = 1.0
+
+[node name="sfx_label" type="Label" parent="audio/vbox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "SFX Volume"
+
+[node name="sfx" type="HSlider" parent="audio/vbox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+max_value = 2.0
+step = 0.01
+value = 1.0
+
+[node name="godot" type="MarginContainer" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -378.0
+offset_top = -279.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
+
+[node name="vbox" type="VBoxContainer" parent="godot"]
+layout_mode = 2
+
+[node name="godot_icon" type="TextureButton" parent="godot/vbox"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture_normal = ExtResource("3_c6fof")
+stretch_mode = 3
+
+[node name="label" type="Label" parent="godot/vbox"]
+layout_mode = 2
+text = "Made in GODOT"
+label_settings = SubResource("LabelSettings_k4k1x")
+
+[connection signal="pressed" from="main/vbox/margin/vbox/play" to="." method="_on_play_pressed"]
+[connection signal="value_changed" from="main/vbox/margin/vbox/X" to="." method="_on_x_value_changed"]
+[connection signal="value_changed" from="main/vbox/margin/vbox/Y" to="." method="_on_y_value_changed"]
+[connection signal="pressed" from="main/vbox/margin/vbox/reset" to="." method="_on_reset_pressed"]
+[connection signal="pressed" from="main/vbox/margin/vbox/exit" to="." method="_on_exit_pressed"]
+[connection signal="toggled" from="main/vbox/margin/vbox/hbox/grid" to="." method="_on_grid_toggled"]
+[connection signal="toggled" from="main/vbox/margin/vbox/hbox/hard" to="." method="_on_hard_toggled"]
+[connection signal="value_changed" from="audio/vbox/master" to="." method="_on_master_value_changed"]
+[connection signal="value_changed" from="audio/vbox/music" to="." method="_on_music_value_changed"]
+[connection signal="value_changed" from="audio/vbox/sfx" to="." method="_on_sfx_value_changed"]
+[connection signal="pressed" from="godot/vbox/godot_icon" to="." method="_on_godot_icon_pressed"]

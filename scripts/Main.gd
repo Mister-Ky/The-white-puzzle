@@ -16,6 +16,10 @@ var grid := false
 # И со сложностью
 var hard := false
 
+var master := 1.0
+var music := 1.0
+var sfx := 1.0
+
 func _ready() -> void:
 	setBusVolumeDB(0.0)
 

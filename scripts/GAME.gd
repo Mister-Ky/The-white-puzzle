@@ -55,6 +55,7 @@ func set_sides_hard() -> void:
 
 func _ready() -> void:
 	victory.hide()
+	camera.global_position = board.global_position + board.get_node("sprite").get_rect().size * Vector2(board.size) / 2
 	num_puzzles = board.size.x * board.size.y
 	for i in range(num_puzzles):
 		var puzzle := Puzzle.new()
@@ -64,6 +65,7 @@ func _ready() -> void:
 		var rotations := [0, 90, 180, 270]
 		puzzle.rotation_degrees = rotations[randi() % rotations.size()]
 		z_puzzles.append(puzzle)
+	if num_puzzles == 1: return
 	if Main.hard:
 		set_sides_hard()
 	else:

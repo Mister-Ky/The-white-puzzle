@@ -4,3 +4,9 @@
 
 [resource]
 shader = ExtResource("1_neq4s")
+shader_parameter/speed = 0.001
+shader_parameter/angle = 20.0
+shader_parameter/color1 = Color(0.190762, 0.190762, 0.190762, 1)
+shader_parameter/color2 = Color(0.521569, 0.521569, 0.521569, 1)
+shader_parameter/grid_size = 130.0
+shader_parameter/grid_spacing = 0.9
