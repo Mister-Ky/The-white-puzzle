@@ -18,22 +18,23 @@ var currently_dragged_puzzle : Puzzle = null
 @onready var z_puzzles : Array[Puzzle] = []
 
 func set_sides() -> void:
+	var offset := randi() % 2
 	for y in range(board.size.y):
 		for x in range(board.size.x):
 			var puzzle := z_puzzles[y * board.size.x + x]
 			
 			if y > 0:
-				puzzle.top_side = Puzzle.Side.Tab
-				z_puzzles[(y - 1) * board.size.x + x].bottom_side = Puzzle.Side.Slot
+				puzzle.top_side = Puzzle.Side.Slot + offset
+				z_puzzles[(y - 1) * board.size.x + x].bottom_side = Puzzle.Side.Tab - offset
 			if y < board.size.y - 1:
-				puzzle.bottom_side = Puzzle.Side.Tab
-				z_puzzles[(y + 1) * board.size.x + x].top_side = Puzzle.Side.Slot
+				puzzle.bottom_side = Puzzle.Side.Slot + offset
+				z_puzzles[(y + 1) * board.size.x + x].top_side = Puzzle.Side.Tab - offset
 			if x > 0:
-				puzzle.left_side = Puzzle.Side.Tab
-				z_puzzles[y * board.size.x + (x - 1)].right_side = Puzzle.Side.Slot
+				puzzle.left_side = Puzzle.Side.Tab - offset
+				z_puzzles[y * board.size.x + (x - 1)].right_side = Puzzle.Side.Slot + offset
 			if x < board.size.x - 1:
-				puzzle.right_side = Puzzle.Side.Tab
-				z_puzzles[y * board.size.x + (x + 1)].left_side = Puzzle.Side.Slot
+				puzzle.right_side = Puzzle.Side.Tab - offset
+				z_puzzles[y * board.size.x + (x + 1)].left_side = Puzzle.Side.Slot + offset
 
 func set_sides_hard() -> void:
 	for y in range(board.size.y):

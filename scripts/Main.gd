@@ -14,7 +14,7 @@ var size := Vector2i(10, 10)
 # Тоже но с сеткой
 var grid := false
 # И со сложностью
-var hard := false
+var hard := true
 
 var master := 1.0
 var music := 1.0
