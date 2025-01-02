@@ -128,7 +128,7 @@ func move_puzzle(puzzle : Puzzle) -> void:
 		z_puzzles.sort_custom(sort_puzzles)
 
 func _physics_process(_delta : float) -> void:
-	var left_click_pressed := Input.is_action_pressed("left_click")
+	var left_click_pressed := Input.is_action_just_pressed("left_click")
 	var left_click_released := Input.is_action_just_released("left_click")
 	var right_click_pressed := Input.is_action_just_pressed("right_click")
 	var right_click_released := Input.is_action_just_released("right_click")
@@ -160,7 +160,7 @@ func _physics_process(_delta : float) -> void:
 			tween.tween_property(puzzle, "rotation_degrees", puzzle.rotation_degrees + 90, 0.2)
 			tween.tween_callback(rot)
 			return
-		if left_click_pressed and currently_dragged_puzzle == puzzle:
+		if Input.is_action_pressed("left_click") and currently_dragged_puzzle == puzzle:
 			puzzle.global_position = puzzle.get_global_mouse_position()
 			puzzle.block = false
 			puzzle.show()
