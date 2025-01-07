@@ -19,8 +19,8 @@ var currently_dragged_puzzle : Puzzle = null
 
 func set_sides() -> void:
 	var offset := randi() % 2
-	for y in range(board.size.y):
-		for x in range(board.size.x):
+	for y in board.size.y:
+		for x in board.size.x:
 			var puzzle := z_puzzles[y * board.size.x + x]
 			
 			if y > 0:
@@ -37,8 +37,8 @@ func set_sides() -> void:
 				z_puzzles[y * board.size.x + (x + 1)].left_side = Puzzle.Side.Slot + offset
 
 func set_sides_hard() -> void:
-	for y in range(board.size.y):
-		for x in range(board.size.x):
+	for y in board.size.y:
+		for x in board.size.x:
 			var puzzle := z_puzzles[y * board.size.x + x]
 			
 			if y > 0:
@@ -74,7 +74,7 @@ func _ready() -> void:
 	victory.hide()
 	camera.global_position = board.global_position + board.get_node("sprite").get_rect().size * Vector2(board.size) / 2
 	num_puzzles = board.size.x * board.size.y
-	for i in range(num_puzzles):
+	for i in num_puzzles:
 		var puzzle := Puzzle.new()
 		puzzle.name = str(i)
 		puzzles_storage.add_child(puzzle)
@@ -188,8 +188,8 @@ func check() -> bool:
 	if blocked == num_puzzles:
 		if num_puzzles == 1: return true
 		z_puzzles.sort_custom(sort_pos_puzzles)
-		for y in range(board.size.y):
-			for x in range(board.size.x):
+		for y in board.size.y:
+			for x in board.size.x:
 				var puzzle := z_puzzles[y * board.size.x + x]
 				
 				if y > 0:
