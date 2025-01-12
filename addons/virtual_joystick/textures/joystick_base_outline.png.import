@@ -2,22 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bkor7jjdri1qj"
-path.s3tc="res://.godot/imported/puzzle.png-a191b11428b68f4dabcf51db2789150d.s3tc.ctex"
-path.etc2="res://.godot/imported/puzzle.png-a191b11428b68f4dabcf51db2789150d.etc2.ctex"
+uid="uid://bm30au8mjfc2f"
+path="res://.godot/imported/joystick_base_outline.png-1529fbc0a23b5af9e961e1a3d047aa0b.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/puzzle.png"
-dest_files=["res://.godot/imported/puzzle.png-a191b11428b68f4dabcf51db2789150d.s3tc.ctex", "res://.godot/imported/puzzle.png-a191b11428b68f4dabcf51db2789150d.etc2.ctex"]
+source_file="res://addons/virtual_joystick/textures/joystick_base_outline.png"
+dest_files=["res://.godot/imported/joystick_base_outline.png-1529fbc0a23b5af9e961e1a3d047aa0b.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

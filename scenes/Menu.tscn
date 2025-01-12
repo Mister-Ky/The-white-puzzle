@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dmoi8egpgdrjb"]
+[gd_scene load_steps=9 format=3 uid="uid://dmoi8egpgdrjb"]
 
 [ext_resource type="Script" path="res://scripts/Menu.gd" id="1_xvtuy"]
 [ext_resource type="Material" uid="uid://dybb0lrvhqgu2" path="res://data/fon_material.tres" id="2_tyq73"]
@@ -16,8 +16,13 @@ CheckBox/font_sizes/font_size = 40
 Label/font_sizes/font_size = 50
 
 [sub_resource type="LabelSettings" id="LabelSettings_k4k1x"]
-font_size = 45
-outline_size = 30
+font_size = 46
+outline_size = 20
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_sx0ew"]
+font_size = 30
+outline_size = 20
 outline_color = Color(0, 0, 0, 1)
 
 [node name="Menu" type="Node"]
@@ -81,29 +86,65 @@ theme_override_constants/separation = 30
 layout_mode = 2
 text = "Play"
 
-[node name="X_label" type="Label" parent="main/vbox/margin/vbox"]
+[node name="x_hbox" type="HBoxContainer" parent="main/vbox/margin/vbox"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="-" type="Button" parent="main/vbox/margin/vbox/x_hbox"]
+custom_minimum_size = Vector2(89, 89)
+layout_mode = 2
+text = "-"
+
+[node name="vbox" type="VBoxContainer" parent="main/vbox/margin/vbox/x_hbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="X_label" type="Label" parent="main/vbox/margin/vbox/x_hbox/vbox"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Width : 10"
 
-[node name="X" type="HSlider" parent="main/vbox/margin/vbox"]
+[node name="X" type="HSlider" parent="main/vbox/margin/vbox/x_hbox/vbox"]
 unique_name_in_owner = true
 layout_mode = 2
 min_value = 1.0
 max_value = 128.0
 value = 10.0
 
-[node name="Y_label" type="Label" parent="main/vbox/margin/vbox"]
+[node name="+" type="Button" parent="main/vbox/margin/vbox/x_hbox"]
+custom_minimum_size = Vector2(89, 89)
+layout_mode = 2
+text = "+"
+
+[node name="y_hbox" type="HBoxContainer" parent="main/vbox/margin/vbox"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="-" type="Button" parent="main/vbox/margin/vbox/y_hbox"]
+custom_minimum_size = Vector2(89, 89)
+layout_mode = 2
+text = "-"
+
+[node name="vbox" type="VBoxContainer" parent="main/vbox/margin/vbox/y_hbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Y_label" type="Label" parent="main/vbox/margin/vbox/y_hbox/vbox"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Height : 10"
 
-[node name="Y" type="HSlider" parent="main/vbox/margin/vbox"]
+[node name="Y" type="HSlider" parent="main/vbox/margin/vbox/y_hbox/vbox"]
 unique_name_in_owner = true
 layout_mode = 2
 min_value = 1.0
 max_value = 128.0
 value = 10.0
+
+[node name="+" type="Button" parent="main/vbox/margin/vbox/y_hbox"]
+custom_minimum_size = Vector2(89, 89)
+layout_mode = 2
+text = "+"
 
 [node name="reset" type="Button" parent="main/vbox/margin/vbox"]
 layout_mode = 2
@@ -215,9 +256,33 @@ layout_mode = 2
 text = "Made in GODOT"
 label_settings = SubResource("LabelSettings_k4k1x")
 
+[node name="credits" type="VBoxContainer" parent="."]
+offset_left = 10.0
+offset_top = 5.0
+offset_right = 50.0
+offset_bottom = 45.0
+theme_override_constants/separation = 20
+
+[node name="author" type="Label" parent="credits"]
+layout_mode = 2
+text = "GAME :
+Author - Mister KygecHik3524"
+label_settings = SubResource("LabelSettings_sx0ew")
+
+[node name="addons_android" type="Label" parent="credits"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "ADDONS (ANDROID) :
+Virtual Joystick, Author - Marco Fazio"
+label_settings = SubResource("LabelSettings_sx0ew")
+
 [connection signal="pressed" from="main/vbox/margin/vbox/play" to="." method="_on_play_pressed"]
-[connection signal="value_changed" from="main/vbox/margin/vbox/X" to="." method="_on_x_value_changed"]
-[connection signal="value_changed" from="main/vbox/margin/vbox/Y" to="." method="_on_y_value_changed"]
+[connection signal="pressed" from="main/vbox/margin/vbox/x_hbox/-" to="." method="_on_x_minus_pressed"]
+[connection signal="value_changed" from="main/vbox/margin/vbox/x_hbox/vbox/X" to="." method="_on_x_value_changed"]
+[connection signal="pressed" from="main/vbox/margin/vbox/x_hbox/+" to="." method="_on_x_plus_pressed"]
+[connection signal="pressed" from="main/vbox/margin/vbox/y_hbox/-" to="." method="_on_y_minus_pressed"]
+[connection signal="value_changed" from="main/vbox/margin/vbox/y_hbox/vbox/Y" to="." method="_on_y_value_changed"]
+[connection signal="pressed" from="main/vbox/margin/vbox/y_hbox/+" to="." method="_on_y_plus_pressed"]
 [connection signal="pressed" from="main/vbox/margin/vbox/reset" to="." method="_on_reset_pressed"]
 [connection signal="pressed" from="main/vbox/margin/vbox/exit" to="." method="_on_exit_pressed"]
 [connection signal="toggled" from="main/vbox/margin/vbox/hbox/grid" to="." method="_on_grid_toggled"]

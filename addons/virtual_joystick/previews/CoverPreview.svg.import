@@ -2,22 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bkor7jjdri1qj"
-path.s3tc="res://.godot/imported/puzzle.png-a191b11428b68f4dabcf51db2789150d.s3tc.ctex"
-path.etc2="res://.godot/imported/puzzle.png-a191b11428b68f4dabcf51db2789150d.etc2.ctex"
+uid="uid://bf1i2dkg4dfcq"
+path="res://.godot/imported/CoverPreview.svg-7c17dc7ed6007b5f94a5e30c30227a42.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/puzzle.png"
-dest_files=["res://.godot/imported/puzzle.png-a191b11428b68f4dabcf51db2789150d.s3tc.ctex", "res://.godot/imported/puzzle.png-a191b11428b68f4dabcf51db2789150d.etc2.ctex"]
+source_file="res://addons/virtual_joystick/previews/CoverPreview.svg"
+dest_files=["res://.godot/imported/CoverPreview.svg-7c17dc7ed6007b5f94a5e30c30227a42.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
@@ -34,3 +32,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
+svg/scale=1.0
+editor/scale_with_editor_scale=false
+editor/convert_colors_with_editor_theme=false

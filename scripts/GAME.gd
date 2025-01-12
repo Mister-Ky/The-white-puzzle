@@ -8,14 +8,16 @@ extends Node
 @onready var storage : Panel = %storage
 @onready var victory : Control = %victory
 @onready var timer : TimeLabel = %timer
-
 @onready var rotation : AudioStreamPlayer = %rotation
-
-var num_puzzles : int
-
-var currently_dragged_puzzle : Puzzle = null
+@onready var ui : CanvasLayer = %ui
+@onready var info : Label = %info
+@onready var right_mode : TextureButton = %right_mode
+@onready var zoom : VBoxContainer = %zoom
 
 @onready var z_puzzles : Array[Puzzle] = []
+var num_puzzles : int
+var currently_dragged_puzzle : Puzzle = null
+var right_android_mode := false
 
 func set_sides() -> void:
 	var offset := randi() % 2
@@ -71,6 +73,21 @@ func set_sides_hard() -> void:
 					z_puzzles[y * board.size.x + (x + 1)].left_side = Puzzle.Side.Tab
 
 func _ready() -> void:
+	if Main.is_android():
+		android_right_update()
+		set_process(false)
+		info.hide()
+		var move : Node = load("res://addons/virtual_joystick/virtual_joystick_scene.tscn").instantiate()
+		move.name = "move"
+		ui.add_child(move)
+		ui.move_child(move, zoom.get_index())
+	else:
+		var del_paths : Array = ["ui/right_mode", "ui/zoom", "ui/move"]
+		for dp in del_paths:
+			var dn = get_node_or_null(dp)
+			if dn:
+				dn.hide()
+				dn.queue_free()
 	victory.hide()
 	camera.global_position = board.global_position + board.get_node("sprite").get_rect().size * Vector2(board.size) / 2
 	num_puzzles = board.size.x * board.size.y
@@ -132,6 +149,13 @@ func _physics_process(_delta : float) -> void:
 	var left_click_released := Input.is_action_just_released("left_click")
 	var right_click_pressed := Input.is_action_just_pressed("right_click")
 	var right_click_released := Input.is_action_just_released("right_click")
+	
+	if Main.is_android():
+		if right_android_mode:
+			right_click_pressed = left_click_pressed
+			right_click_released = left_click_released
+			left_click_pressed = false
+			left_click_released = false
 	
 	for puzzle : Puzzle in z_puzzles:
 		if (left_click_pressed or right_click_pressed) and puzzle.get_rect().has_point(puzzle.get_local_mouse_position()) and not currently_dragged_puzzle:
@@ -212,10 +236,12 @@ func win() -> void:
 	timer.stop()
 	var tween := create_tween().set_trans(Tween.TransitionType.TRANS_SINE).set_ease(Tween.EaseType.EASE_IN)
 	tween.tween_property(storage, "global_position:x", get_viewport().size.x + storage.size.x, 1.0)
-	tween.tween_callback(pok_win)
+	tween.tween_callback(next_win)
 
-func pok_win() -> void:
+func next_win() -> void:
 	victory.show()
+	right_mode.disabled = true
+	right_mode.hide()
 	$win.play()
 	await get_tree().physics_frame
 	await get_tree().physics_frame
@@ -236,13 +262,11 @@ func _on_menu_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/Menu.tscn")
 
 
-
-
 func set_info(text : String) -> void:
-	$ui/info.text = text
+	info.text = text
 
 func return_info() -> void:
-	$ui/info.text = """ESCAPE — hold to exit to menu
+	info.text = """ESCAPE — hold to exit to menu
 	Left click — drag puzzles
 	Right click — rotate puzzles
 	WASD — camera movement
@@ -269,3 +293,11 @@ func _process(delta : float) -> void:
 		is_key_held = false
 		time_held = 0.0
 		return_info()
+
+# android
+func _on_android_right_pressed() -> void:
+	right_android_mode = not right_android_mode
+	android_right_update()
+
+func android_right_update() -> void:
+	right_mode.texture_normal = preload("res://data/rotation_on.png") if right_android_mode else preload("res://data/rotation_off.png")

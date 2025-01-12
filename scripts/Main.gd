@@ -23,6 +23,9 @@ var sfx := 1.0
 func _ready() -> void:
 	setBusVolumeDB(0.0)
 
+func is_android() -> bool:
+	return OS.get_name() == "Android" or OS.get_cmdline_args().has("-android")
+
 func set_fullscreen(value : bool) -> void:
 	if value:
 		get_window().mode = Window.MODE_FULLSCREEN

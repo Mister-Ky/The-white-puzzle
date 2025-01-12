@@ -8,11 +8,20 @@ extends Node
 @onready var master : HSlider = %master
 @onready var music : HSlider = %music
 @onready var sfx : HSlider = %sfx
+@onready var addons_android : Label = %addons_android
 
 @onready var X_label : Label = %X_label
 @onready var Y_label : Label = %Y_label
 
+var size_max := 128
+
 func _ready() -> void:
+	if Main.is_android():
+		size_max /= 2
+	else:
+		addons_android.hide()
+	X.max_value = size_max
+	Y.max_value = size_max
 	update()
 	grid.button_pressed = Main.grid
 	hard.button_pressed = Main.hard
@@ -64,3 +73,13 @@ func _on_sfx_value_changed(value : float) -> void:
 
 func _on_godot_icon_pressed() -> void:
 	OS.shell_open("https://godotengine.org/")
+
+
+func _on_x_minus_pressed() -> void:
+	X.value -= 1
+func _on_x_plus_pressed() -> void:
+	X.value += 1
+func _on_y_minus_pressed() -> void:
+	Y.value -= 1
+func _on_y_plus_pressed() -> void:
+	Y.value += 1

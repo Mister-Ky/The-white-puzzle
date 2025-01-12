@@ -15,7 +15,6 @@ config/version="1.0.0.0"
 run/main_scene="res://scenes/Menu.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 boot_splash/bg_color=Color(0, 0, 0, 1)
-boot_splash/show_image=false
 config/icon="res://icon.svg"
 config/windows_native_icon="res://icon.ico"
 
@@ -31,13 +30,41 @@ window/size/viewport_height=1080
 window/size/mode=3
 window/stretch/mode="viewport"
 window/stretch/aspect="ignore"
+window/stretch/aspect.android="keep_width"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/virtual_joystick/plugin.cfg")
 
 [file_customization]
 
 folder_colors={
+"res://addons/": "gray",
 "res://data/": "green",
 "res://scenes/": "blue",
 "res://scripts/": "red"
+}
+
+[importer_defaults]
+
+texture={
+"compress/channel_pack": 0,
+"compress/hdr_compression": 1,
+"compress/high_quality": true,
+"compress/lossy_quality": 0.7,
+"compress/mode": 2,
+"compress/normal_map": 0,
+"detect_3d/compress_to": 1,
+"mipmaps/generate": false,
+"mipmaps/limit": -1,
+"process/fix_alpha_border": true,
+"process/hdr_as_srgb": false,
+"process/hdr_clamp_exposure": false,
+"process/normal_map_invert_y": false,
+"process/premult_alpha": false,
+"process/size_limit": 0,
+"roughness/mode": 0,
+"roughness/src_normal": ""
 }
 
 [input]
@@ -112,5 +139,6 @@ pointing/emulate_touch_from_mouse=true
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+textures/vram_compression/import_etc2_astc=true
 environment/defaults/default_clear_color=Color(0.20871, 0.20871, 0.20871, 1)
 viewport/hdr_2d=true
