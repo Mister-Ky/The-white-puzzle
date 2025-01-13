@@ -2,9 +2,9 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dwni514faq313"
-path.bptc="res://.godot/imported/ic_launcher_foreground.png-be8fe1509344f778b8146a9568615424.bptc.ctex"
-path.astc="res://.godot/imported/ic_launcher_foreground.png-be8fe1509344f778b8146a9568615424.astc.ctex"
+uid="uid://dvx3h7s1auuod"
+path.bptc="res://.godot/imported/ic_launcher_background.png-ec9295c8323f12a7153018dde9456b2c.bptc.ctex"
+path.astc="res://.godot/imported/ic_launcher_background.png-ec9295c8323f12a7153018dde9456b2c.astc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ metadata={
 
 [deps]
 
-source_file="res://ic_launcher_foreground.png"
-dest_files=["res://.godot/imported/ic_launcher_foreground.png-be8fe1509344f778b8146a9568615424.bptc.ctex", "res://.godot/imported/ic_launcher_foreground.png-be8fe1509344f778b8146a9568615424.astc.ctex"]
+source_file="res://icons/ic_launcher_background.png"
+dest_files=["res://.godot/imported/ic_launcher_background.png-ec9295c8323f12a7153018dde9456b2c.bptc.ctex", "res://.godot/imported/ic_launcher_background.png-ec9295c8323f12a7153018dde9456b2c.astc.ctex"]
 
 [params]
 

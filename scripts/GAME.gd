@@ -152,19 +152,23 @@ func _physics_process(_delta : float) -> void:
 		if (left_click_pressed or right_click_pressed) and move_mouse_inside:
 			return
 	
-	for puzzle : Puzzle in z_puzzles:
-		if (left_click_pressed or right_click_pressed) and puzzle.get_rect().has_point(puzzle.get_local_mouse_position()) and not currently_dragged_puzzle:
-			if not timer.is_running:
-				timer.start()
-			currently_dragged_puzzle = puzzle
-			if (right_click_pressed and not puzzle.block) or left_click_pressed:
-				puzzle.set_z(1)
-			for p : Puzzle in z_puzzles:
-				if not p.block and not p == puzzle:
-					p.set_z(0)
-			z_puzzles.sort_custom(sort_puzzles)
-		elif (left_click_released or right_click_released) and currently_dragged_puzzle == puzzle:
-			if left_click_released:
+	if (left_click_pressed or right_click_pressed) and not currently_dragged_puzzle:
+		for puzzle : Puzzle in z_puzzles:
+			if puzzle.get_rect().has_point(puzzle.get_local_mouse_position()):
+				if not timer.is_running:
+					timer.start()
+				currently_dragged_puzzle = puzzle
+				if (right_click_pressed and not puzzle.block) or left_click_pressed:
+					puzzle.set_z(1)
+				for p : Puzzle in z_puzzles:
+					if not p.block and not p == puzzle:
+						p.set_z(0)
+				z_puzzles.sort_custom(sort_puzzles)
+				break
+	
+	if currently_dragged_puzzle:
+		if (left_click_released or right_click_released):
+			if left_click_released and currently_dragged_puzzle.get_parent() == puzzles:
 				move_puzzle(currently_dragged_puzzle)
 			currently_dragged_puzzle = null
 			if check():
@@ -172,31 +176,29 @@ func _physics_process(_delta : float) -> void:
 				return
 			elif blocked == num_puzzles:
 				z_puzzles.sort_custom(sort_puzzles)
-		if right_click_pressed and currently_dragged_puzzle == puzzle:
+		elif right_click_pressed:
 			set_physics_process(false)
 			rotation.play()
 			var tween := create_tween().set_trans(Tween.TransitionType.TRANS_SINE).set_ease(Tween.EaseType.EASE_IN)
-			tween.tween_property(puzzle, "rotation_degrees", puzzle.rotation_degrees + 90, 0.2)
+			tween.tween_property(currently_dragged_puzzle, "rotation_degrees", currently_dragged_puzzle.rotation_degrees + 90, 0.2)
 			tween.tween_callback(rot)
-			return
-		if Input.is_action_pressed("left_click") and currently_dragged_puzzle == puzzle:
-			puzzle.global_position = puzzle.get_global_mouse_position()
-			if puzzle.block: blocked -= 1
-			puzzle.block = false
-			puzzle.show()
-			if puzzle.get_parent() == puzzles_storage and puzzles_storage.get_local_mouse_position().x <= 0:
-				puzzle.hide()
-				puzzles_storage.remove_child(puzzle)
-				puzzles.add_child(puzzle)
+		elif Input.is_action_pressed("left_click"):
+			currently_dragged_puzzle.global_position = currently_dragged_puzzle.get_global_mouse_position()
+			if currently_dragged_puzzle.block: blocked -= 1
+			currently_dragged_puzzle.block = false
+			currently_dragged_puzzle.show()
+			if currently_dragged_puzzle.get_parent() == puzzles_storage and puzzles_storage.get_local_mouse_position().x <= 0:
+				currently_dragged_puzzle.hide()
+				puzzles_storage.remove_child(currently_dragged_puzzle)
+				puzzles.add_child(currently_dragged_puzzle)
 				if Main.is_android():
-					puzzle.scale /= 2
-			elif puzzle.get_parent() == puzzles and puzzles_storage.get_local_mouse_position().x > 0:
-				puzzle.hide()
-				puzzles.remove_child(puzzle)
-				puzzles_storage.add_child(puzzle)
+					currently_dragged_puzzle.scale /= 2
+			elif currently_dragged_puzzle.get_parent() == puzzles and puzzles_storage.get_local_mouse_position().x > 0:
+				currently_dragged_puzzle.hide()
+				puzzles.remove_child(currently_dragged_puzzle)
+				puzzles_storage.add_child(currently_dragged_puzzle)
 				if Main.is_android():
-					puzzle.scale *= 2
-			break
+					currently_dragged_puzzle.scale *= 2
 
 func rot() -> void:
 	currently_dragged_puzzle = null
@@ -236,8 +238,9 @@ func win() -> void:
 	tween.tween_callback(next_win)
 
 func next_win() -> void:
-	right_mode.disabled = true
-	right_mode.hide()
+	if Main.is_android():
+		right_mode.disabled = true
+		right_mode.hide()
 	victory.show()
 	$win.play()
 	await get_tree().physics_frame # чтобы установилась позиция у timer point
@@ -246,11 +249,7 @@ func next_win() -> void:
 	tween.tween_property(timer, "global_position", %victory/vbox/vbox1/point/timer_point.global_position - timer.size / 2, 2.0)
 
 func check_side_match(side_1 : Puzzle.Side, side_2 : Puzzle.Side) -> bool:
-	if side_1 == Puzzle.Side.Slot and side_2 == Puzzle.Side.Tab:
-		return true
-	if side_1 == Puzzle.Side.Tab and side_2 == Puzzle.Side.Slot:
-		return true
-	return false
+	return (side_1 == Puzzle.Side.Slot and side_2 == Puzzle.Side.Tab) or (side_1 == Puzzle.Side.Tab and side_2 == Puzzle.Side.Slot)
 
 func _on_again_pressed() -> void:
 	get_tree().reload_current_scene()
