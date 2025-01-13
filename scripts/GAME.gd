@@ -1,25 +1,26 @@
 class_name GAME
 extends Node
 
+@onready var ui : CanvasLayer = %ui
+@onready var info : Label = %info
+@onready var right_mode : TextureButton = %right_mode
+@onready var victory : Control = %victory
+@onready var zoom : VBoxContainer = %zoom
+@onready var timer : TimeLabel = %timer
+
 @onready var board : Board = %board
 @onready var camera : Camera = %camera
 @onready var puzzles : Node2D = %puzzles
 @onready var puzzles_storage : Control = %puzzles_storage
-@onready var storage : Panel = %storage
-@onready var victory : Control = %victory
-@onready var timer : TimeLabel = %timer
 @onready var rotation : AudioStreamPlayer = %rotation
-@onready var ui : CanvasLayer = %ui
-@onready var info : Label = %info
-@onready var right_mode : TextureButton = %right_mode
-@onready var zoom : VBoxContainer = %zoom
-var move : Node # джостик
 
 @onready var z_puzzles : Array[Puzzle] = []
+var blocked := 0
 var first_text_info : String
 var num_puzzles : int
 var currently_dragged_puzzle : Puzzle = null
 var right_android_mode := false
+var move : Node # джостик
 var move_mouse_inside := false
 
 func set_sides() -> void:
@@ -83,7 +84,7 @@ func _ready() -> void:
 			dn.hide()
 			dn.queue_free()
 	victory.hide()
-	camera.global_position = board.global_position + board.get_node("sprite").get_rect().size * Vector2(board.size) / 2
+	camera.global_position = board.global_position + board.sprite.get_rect().size * Vector2(board.size) / 2
 	num_puzzles = board.size.x * board.size.y
 	for i in num_puzzles:
 		var puzzle := Puzzle.new()
@@ -92,8 +93,7 @@ func _ready() -> void:
 		if Main.is_android():
 			puzzle.scale *= 2
 		puzzle.position = Vector2(randi() % int(puzzles_storage.size.x - puzzle.texture.get_size().x * puzzle.scale.x), randi() % int(puzzles_storage.size.y - puzzle.texture.get_size().y * puzzle.scale.y)) + puzzle.texture.get_size() * puzzle.scale / 2
-		var rotations := [0, 90, 180, 270]
-		puzzle.rotation_degrees = rotations[randi() % rotations.size()]
+		puzzle.rotation_degrees = [0, 90, 180, 270].pick_random()
 		z_puzzles.append(puzzle)
 	if Main.hard:
 		set_sides_hard()
@@ -101,7 +101,6 @@ func _ready() -> void:
 		set_sides()
 	for p : Puzzle in z_puzzles:
 		p.create()
-		p.set_z(1)
 	z_puzzles.sort_custom(sort_puzzles)
 
 func sort_puzzles(a : Puzzle, b : Puzzle) -> bool:
@@ -110,12 +109,9 @@ func sort_puzzles(a : Puzzle, b : Puzzle) -> bool:
 	return a.get_index() > b.get_index()
 
 func sort_pos_puzzles(a : Puzzle, b : Puzzle) -> bool:
-	if a.global_position.y < b.global_position.y:
-		return true
-	elif a.global_position.y == b.global_position.y:
-		if a.global_position.x < b.global_position.x:
-			return true
-	return false
+	if a.global_position.y == b.global_position.y:
+		return a.global_position.x < b.global_position.x
+	return a.global_position.y < b.global_position.y
 
 func is_cell_occupied(cell_position : Vector2) -> bool:
 	for puzzle : Puzzle in z_puzzles:
@@ -136,8 +132,9 @@ func move_puzzle(puzzle : Puzzle) -> void:
 	
 	if (puzzle.get_rect().has_point(nearest_point - puzzle.global_position)) and (not is_cell_occupied(nearest_point)):
 		puzzle.global_position = nearest_point
+		blocked += 1
 		puzzle.block = true
-		puzzle.set_z(0)
+		puzzle.set_z(-1)
 		z_puzzles.sort_custom(sort_puzzles)
 
 func _physics_process(_delta : float) -> void:
@@ -161,10 +158,10 @@ func _physics_process(_delta : float) -> void:
 				timer.start()
 			currently_dragged_puzzle = puzzle
 			if (right_click_pressed and not puzzle.block) or left_click_pressed:
-				puzzle.set_z(2)
+				puzzle.set_z(1)
 			for p : Puzzle in z_puzzles:
 				if not p.block and not p == puzzle:
-					p.set_z(1)
+					p.set_z(0)
 			z_puzzles.sort_custom(sort_puzzles)
 		elif (left_click_released or right_click_released) and currently_dragged_puzzle == puzzle:
 			if left_click_released:
@@ -173,7 +170,7 @@ func _physics_process(_delta : float) -> void:
 			if check():
 				win()
 				return
-			else:
+			elif blocked == num_puzzles:
 				z_puzzles.sort_custom(sort_puzzles)
 		if right_click_pressed and currently_dragged_puzzle == puzzle:
 			set_physics_process(false)
@@ -184,6 +181,7 @@ func _physics_process(_delta : float) -> void:
 			return
 		if Input.is_action_pressed("left_click") and currently_dragged_puzzle == puzzle:
 			puzzle.global_position = puzzle.get_global_mouse_position()
+			if puzzle.block: blocked -= 1
 			puzzle.block = false
 			puzzle.show()
 			if puzzle.get_parent() == puzzles_storage and puzzles_storage.get_local_mouse_position().x <= 0:
@@ -208,9 +206,6 @@ func rot() -> void:
 		set_physics_process(true)
 
 func check() -> bool:
-	var blocked := 0
-	for p : Puzzle in z_puzzles:
-		if p.block: blocked += 1
 	if blocked == num_puzzles:
 		if num_puzzles == 1: return true
 		z_puzzles.sort_custom(sort_pos_puzzles)
@@ -237,15 +232,15 @@ func win() -> void:
 	set_physics_process(false)
 	timer.stop()
 	var tween := create_tween().set_trans(Tween.TransitionType.TRANS_SINE).set_ease(Tween.EaseType.EASE_IN)
-	tween.tween_property(storage, "global_position:x", get_viewport().size.x + storage.size.x, 1.0)
+	tween.tween_property(%storage, "global_position:x", get_viewport().size.x + %storage.size.x, 1.0)
 	tween.tween_callback(next_win)
 
 func next_win() -> void:
-	victory.show()
 	right_mode.disabled = true
 	right_mode.hide()
+	victory.show()
 	$win.play()
-	await get_tree().physics_frame
+	await get_tree().physics_frame # чтобы установилась позиция у timer point
 	await get_tree().physics_frame
 	var tween := create_tween().set_trans(Tween.TransitionType.TRANS_SINE).set_ease(Tween.EaseType.EASE_IN)
 	tween.tween_property(timer, "global_position", %victory/vbox/vbox1/point/timer_point.global_position - timer.size / 2, 2.0)
@@ -255,7 +250,7 @@ func check_side_match(side_1 : Puzzle.Side, side_2 : Puzzle.Side) -> bool:
 		return true
 	if side_1 == Puzzle.Side.Tab and side_2 == Puzzle.Side.Slot:
 		return true
-	return side_1 == Puzzle.Side.None and side_2 == Puzzle.Side.None
+	return false
 
 func _on_again_pressed() -> void:
 	get_tree().reload_current_scene()
@@ -272,24 +267,19 @@ func _process(delta : float) -> void:
 		if is_key_held:
 			time_held += delta
 		else:
-			is_key_held = true
 			time_held = 0.0
-		
-		info.text = "EXIT" + ".".repeat(int(time_held / 0.5) + 1)
-		
+			is_key_held = true
 		if time_held >= hold_time:
 			get_tree().change_scene_to_file("res://scenes/Menu.tscn")
-			is_key_held = false
-			time_held = 0.0
-	else:
-		is_key_held = false
+		info.text = "EXIT" + ".".repeat(int(time_held / 0.5) + 1)
+	elif Input.is_action_just_released("ui_cancel"):
 		time_held = 0.0
+		is_key_held = false
 		info.text = first_text_info
 
 # android
 func _on_android_right_pressed() -> void:
 	right_android_mode = not right_android_mode
 	android_right_update()
-
 func android_right_update() -> void:
 	right_mode.texture_normal = preload("res://data/rotation_on.png") if right_android_mode else preload("res://data/rotation_off.png")

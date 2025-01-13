@@ -28,7 +28,6 @@ func set_z(z : int) -> void:
 
 func _ready() -> void:
 	texture = Main.puzzle_texture
-	scale = Vector2(Main.cell_size) / texture.get_size()
 
 func create() -> void:
 	top = Sprite2D.new()

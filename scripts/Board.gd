@@ -1,7 +1,7 @@
 class_name Board
 extends Node2D
 
-@onready var sprite : Sprite2D = %sprite
+@onready var sprite : Sprite2D = $sprite
 
 var cell_centers : Array[Vector2] = []
 
@@ -9,7 +9,7 @@ var size : Vector2i :
 	set(_value): pass
 	get: return Main.size
 
-var cell_size : Vector2i :
+var cell_size : Vector2 :
 	set(_value): pass
 	get: return Main.cell_size
 

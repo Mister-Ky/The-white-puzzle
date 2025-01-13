@@ -2,9 +2,9 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bpc60vbpyw17g"
-path.bptc="res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.bptc.ctex"
-path.astc="res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.astc.ctex"
+uid="uid://c18bxm7mkh4ud"
+path.bptc="res://.godot/imported/ic_launcher.png-489b19ab887b88d489d18063f5a8eb8a.bptc.ctex"
+path.astc="res://.godot/imported/ic_launcher.png-489b19ab887b88d489d18063f5a8eb8a.astc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ metadata={
 
 [deps]
 
-source_file="res://icon.svg"
-dest_files=["res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.bptc.ctex", "res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.astc.ctex"]
+source_file="res://ic_launcher.png"
+dest_files=["res://.godot/imported/ic_launcher.png-489b19ab887b88d489d18063f5a8eb8a.bptc.ctex", "res://.godot/imported/ic_launcher.png-489b19ab887b88d489d18063f5a8eb8a.astc.ctex"]
 
 [params]
 
@@ -34,6 +34,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

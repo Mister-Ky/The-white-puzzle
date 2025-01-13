@@ -40,7 +40,7 @@ func update() -> void:
 	Y.value = Main.size.y
 
 func _on_play_pressed() -> void:
-	Main.size = Vector2i(X.value, Y.value)
+	Main.size = Vector2(X.value, Y.value)
 	get_tree().change_scene_to_file("res://scenes/GAME.tscn")
 
 func _on_x_value_changed(value : float) -> void:

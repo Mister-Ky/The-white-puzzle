@@ -3,7 +3,7 @@ extends Node
 ## Разделитель для консоли. Используйте так - [code]print(Main.CONLINE)[/code].
 const CONLINE := "----------------------------------------" # 40
 
-const cell_size := Vector2i(64, 64)
+const cell_size := Vector2i.ONE * 64
 var puzzle_texture := load("res://data/puzzle.png")
 var none := load("res://data/none.png")
 var slot := load("res://data/slot.png")
@@ -26,7 +26,7 @@ func _ready() -> void:
 	setBusVolumeDB(0.0)
 
 func is_android() -> bool:
-	return _android or true
+	return _android
 
 func set_fullscreen(value : bool) -> void:
 	if value:
