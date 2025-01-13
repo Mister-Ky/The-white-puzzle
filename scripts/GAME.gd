@@ -247,11 +247,7 @@ func next_win() -> void:
 	tween.tween_property(timer, "global_position", %victory/vbox/vbox1/point/timer_point.global_position - timer.size / 2, 2.0)
 
 func check_side_match(side_1 : Puzzle.Side, side_2 : Puzzle.Side) -> bool:
-	if side_1 == Puzzle.Side.Slot and side_2 == Puzzle.Side.Tab:
-		return true
-	if side_1 == Puzzle.Side.Tab and side_2 == Puzzle.Side.Slot:
-		return true
-	return false
+	return (side_1 == Puzzle.Side.Slot and side_2 == Puzzle.Side.Tab) or (side_1 == Puzzle.Side.Tab and side_2 == Puzzle.Side.Slot)
 
 func _on_again_pressed() -> void:
 	get_tree().reload_current_scene()
