@@ -3,8 +3,8 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c18bxm7mkh4ud"
-path.bptc="res://.godot/imported/ic_launcher.png-489b19ab887b88d489d18063f5a8eb8a.bptc.ctex"
-path.astc="res://.godot/imported/ic_launcher.png-489b19ab887b88d489d18063f5a8eb8a.astc.ctex"
+path.bptc="res://.godot/imported/ic_launcher.png-ee831df8f32d80dae879f6199949a527.bptc.ctex"
+path.astc="res://.godot/imported/ic_launcher.png-ee831df8f32d80dae879f6199949a527.astc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ metadata={
 
 [deps]
 
-source_file="res://ic_launcher.png"
-dest_files=["res://.godot/imported/ic_launcher.png-489b19ab887b88d489d18063f5a8eb8a.bptc.ctex", "res://.godot/imported/ic_launcher.png-489b19ab887b88d489d18063f5a8eb8a.astc.ctex"]
+source_file="res://icons/ic_launcher.png"
+dest_files=["res://.godot/imported/ic_launcher.png-ee831df8f32d80dae879f6199949a527.bptc.ctex", "res://.godot/imported/ic_launcher.png-ee831df8f32d80dae879f6199949a527.astc.ctex"]
 
 [params]
 

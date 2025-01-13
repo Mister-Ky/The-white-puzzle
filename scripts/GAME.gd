@@ -236,8 +236,9 @@ func win() -> void:
 	tween.tween_callback(next_win)
 
 func next_win() -> void:
-	right_mode.disabled = true
-	right_mode.hide()
+	if Main.is_android():
+		right_mode.disabled = true
+		right_mode.hide()
 	victory.show()
 	$win.play()
 	await get_tree().physics_frame # чтобы установилась позиция у timer point
