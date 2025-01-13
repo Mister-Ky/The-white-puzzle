@@ -13,11 +13,14 @@ extends Node
 @onready var info : Label = %info
 @onready var right_mode : TextureButton = %right_mode
 @onready var zoom : VBoxContainer = %zoom
+var move : Node # джостик
 
 @onready var z_puzzles : Array[Puzzle] = []
+var first_text_info : String
 var num_puzzles : int
 var currently_dragged_puzzle : Puzzle = null
 var right_android_mode := false
+var move_mouse_inside := false
 
 func set_sides() -> void:
 	var offset := randi() % 2
@@ -44,50 +47,41 @@ func set_sides_hard() -> void:
 			var puzzle := z_puzzles[y * board.size.x + x]
 			
 			if y > 0:
-				if randi() % 2 == 0:
-					puzzle.top_side = Puzzle.Side.Tab
-					z_puzzles[(y - 1) * board.size.x + x].bottom_side = Puzzle.Side.Slot
-				else:
-					puzzle.top_side = Puzzle.Side.Slot
-					z_puzzles[(y - 1) * board.size.x + x].bottom_side = Puzzle.Side.Tab
+				var offset := randi() % 2
+				puzzle.top_side = Puzzle.Side.Tab - offset
+				z_puzzles[(y - 1) * board.size.x + x].bottom_side = Puzzle.Side.Slot + offset
 			if y < board.size.y - 1:
-				if randi() % 2 == 0:
-					puzzle.bottom_side = Puzzle.Side.Tab
-					z_puzzles[(y + 1) * board.size.x + x].top_side = Puzzle.Side.Slot
-				else:
-					puzzle.bottom_side = Puzzle.Side.Slot
-					z_puzzles[(y + 1) * board.size.x + x].top_side = Puzzle.Side.Tab
+				var offset := randi() % 2
+				puzzle.bottom_side = Puzzle.Side.Tab - offset
+				z_puzzles[(y + 1) * board.size.x + x].top_side = Puzzle.Side.Slot + offset
 			if x > 0:
-				if randi() % 2 == 0:
-					puzzle.left_side = Puzzle.Side.Tab
-					z_puzzles[y * board.size.x + (x - 1)].right_side = Puzzle.Side.Slot
-				else:
-					puzzle.left_side = Puzzle.Side.Slot
-					z_puzzles[y * board.size.x + (x - 1)].right_side = Puzzle.Side.Tab
+				var offset := randi() % 2
+				puzzle.left_side = Puzzle.Side.Tab - offset
+				z_puzzles[y * board.size.x + (x - 1)].right_side = Puzzle.Side.Slot + offset
 			if x < board.size.x - 1:
-				if randi() % 2 == 0:
-					puzzle.right_side = Puzzle.Side.Tab
-					z_puzzles[y * board.size.x + (x + 1)].left_side = Puzzle.Side.Slot
-				else:
-					puzzle.right_side = Puzzle.Side.Slot
-					z_puzzles[y * board.size.x + (x + 1)].left_side = Puzzle.Side.Tab
+				var offset := randi() % 2
+				puzzle.right_side = Puzzle.Side.Tab - offset
+				z_puzzles[y * board.size.x + (x + 1)].left_side = Puzzle.Side.Slot + offset
 
 func _ready() -> void:
 	if Main.is_android():
 		android_right_update()
 		set_process(false)
 		info.hide()
-		var move : Node = load("res://addons/virtual_joystick/virtual_joystick_scene.tscn").instantiate()
+		info.queue_free()
+		move = load("res://addons/virtual_joystick/virtual_joystick_scene.tscn").instantiate()
 		move.name = "move"
 		ui.add_child(move)
 		ui.move_child(move, zoom.get_index())
+		move.base.mouse_entered.connect(func() -> void: move_mouse_inside = true)
+		move.base.mouse_exited.connect(func() -> void: move_mouse_inside = false)
 	else:
-		var del_paths : Array = ["ui/right_mode", "ui/zoom", "ui/move"]
+		first_text_info = info.text
+		var del_paths : Array = ["ui/right_mode", "ui/zoom"]
 		for dp in del_paths:
-			var dn = get_node_or_null(dp)
-			if dn:
-				dn.hide()
-				dn.queue_free()
+			var dn = get_node(dp)
+			dn.hide()
+			dn.queue_free()
 	victory.hide()
 	camera.global_position = board.global_position + board.get_node("sprite").get_rect().size * Vector2(board.size) / 2
 	num_puzzles = board.size.x * board.size.y
@@ -95,7 +89,9 @@ func _ready() -> void:
 		var puzzle := Puzzle.new()
 		puzzle.name = str(i)
 		puzzles_storage.add_child(puzzle)
-		puzzle.position = Vector2(randi() % int(puzzles_storage.size.x - puzzle.texture.get_size().x), randi() % int(puzzles_storage.size.y - puzzle.texture.get_size().y)) + puzzle.texture.get_size() / 2
+		if Main.is_android():
+			puzzle.scale *= 2
+		puzzle.position = Vector2(randi() % int(puzzles_storage.size.x - puzzle.texture.get_size().x * puzzle.scale.x), randi() % int(puzzles_storage.size.y - puzzle.texture.get_size().y * puzzle.scale.y)) + puzzle.texture.get_size() * puzzle.scale / 2
 		var rotations := [0, 90, 180, 270]
 		puzzle.rotation_degrees = rotations[randi() % rotations.size()]
 		z_puzzles.append(puzzle)
@@ -156,6 +152,8 @@ func _physics_process(_delta : float) -> void:
 			right_click_released = left_click_released
 			left_click_pressed = false
 			left_click_released = false
+		if (left_click_pressed or right_click_pressed) and move_mouse_inside:
+			return
 	
 	for puzzle : Puzzle in z_puzzles:
 		if (left_click_pressed or right_click_pressed) and puzzle.get_rect().has_point(puzzle.get_local_mouse_position()) and not currently_dragged_puzzle:
@@ -192,10 +190,14 @@ func _physics_process(_delta : float) -> void:
 				puzzle.hide()
 				puzzles_storage.remove_child(puzzle)
 				puzzles.add_child(puzzle)
+				if Main.is_android():
+					puzzle.scale /= 2
 			elif puzzle.get_parent() == puzzles and puzzles_storage.get_local_mouse_position().x > 0:
 				puzzle.hide()
 				puzzles.remove_child(puzzle)
 				puzzles_storage.add_child(puzzle)
+				if Main.is_android():
+					puzzle.scale *= 2
 			break
 
 func rot() -> void:
@@ -261,17 +263,7 @@ func _on_again_pressed() -> void:
 func _on_menu_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/Menu.tscn")
 
-
-func set_info(text : String) -> void:
-	info.text = text
-
-func return_info() -> void:
-	info.text = """ESCAPE — hold to exit to menu
-	Left click — drag puzzles
-	Right click — rotate puzzles
-	WASD — camera movement
-	Mouse wheel — camera zoom"""
-
+# windows
 var hold_time := 1.5
 var time_held := 0.0
 var is_key_held := false
@@ -283,7 +275,7 @@ func _process(delta : float) -> void:
 			is_key_held = true
 			time_held = 0.0
 		
-		set_info("EXIT" + ".".repeat(int(time_held / 0.5) + 1))
+		info.text = "EXIT" + ".".repeat(int(time_held / 0.5) + 1)
 		
 		if time_held >= hold_time:
 			get_tree().change_scene_to_file("res://scenes/Menu.tscn")
@@ -292,7 +284,7 @@ func _process(delta : float) -> void:
 	else:
 		is_key_held = false
 		time_held = 0.0
-		return_info()
+		info.text = first_text_info
 
 # android
 func _on_android_right_pressed() -> void:

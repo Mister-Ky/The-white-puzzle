@@ -27,7 +27,7 @@ func set_z(z : int) -> void:
 	left.z_index = z
 
 func _ready() -> void:
-	texture = load("res://data/puzzle.png")
+	texture = Main.puzzle_texture
 	scale = Vector2(Main.cell_size) / texture.get_size()
 
 func create() -> void:

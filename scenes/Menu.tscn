@@ -263,6 +263,12 @@ offset_right = 50.0
 offset_bottom = 45.0
 theme_override_constants/separation = 20
 
+[node name="version" type="Label" parent="credits"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Version : unknown"
+label_settings = SubResource("LabelSettings_sx0ew")
+
 [node name="author" type="Label" parent="credits"]
 layout_mode = 2
 text = "GAME :

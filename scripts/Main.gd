@@ -4,10 +4,10 @@ extends Node
 const CONLINE := "----------------------------------------" # 40
 
 const cell_size := Vector2i(64, 64)
-
-@onready var none := load("res://data/none.png")
-@onready var slot := load("res://data/slot.png")
-@onready var tab := load("res://data/tab.png")
+var puzzle_texture := load("res://data/puzzle.png")
+var none := load("res://data/none.png")
+var slot := load("res://data/slot.png")
+var tab := load("res://data/tab.png")
 
 # Нужен чтобы из меню в игру перевести настройки
 var size := Vector2i(10, 10)
@@ -20,11 +20,13 @@ var master := 1.0
 var music := 1.0
 var sfx := 1.0
 
+var _android := OS.get_name() == "Android"
+
 func _ready() -> void:
 	setBusVolumeDB(0.0)
 
 func is_android() -> bool:
-	return OS.get_name() == "Android" or OS.get_cmdline_args().has("-android")
+	return _android or true
 
 func set_fullscreen(value : bool) -> void:
 	if value:

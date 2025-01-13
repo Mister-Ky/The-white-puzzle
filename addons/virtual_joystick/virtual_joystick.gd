@@ -54,13 +54,13 @@ var output := Vector2.ZERO
 
 var _touch_index : int = -1
 
-@onready var _base := $Base
-@onready var _tip := $Base/Tip
+@onready var base := $Base
+@onready var tip := $Base/Tip
 
-@onready var _base_default_position : Vector2 = _base.position
-@onready var _tip_default_position : Vector2 = _tip.position
+@onready var _base_default_position : Vector2 = base.position
+@onready var _tip_default_position : Vector2 = tip.position
 
-@onready var _default_color : Color = _tip.modulate
+@onready var _default_color : Color = tip.modulate
 
 # FUNCTIONS
 
@@ -87,7 +87,7 @@ func _input(event: InputEvent) -> void:
 					if visibility_mode == Visibility_mode.WHEN_TOUCHED:
 						show()
 					_touch_index = event.index
-					_tip.modulate = pressed_color
+					tip.modulate = pressed_color
 					_update_joystick(event.position)
 					get_viewport().set_input_as_handled()
 		elif event.index == _touch_index:
@@ -101,10 +101,10 @@ func _input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 
 func _move_base(new_position: Vector2) -> void:
-	_base.global_position = new_position - _base.pivot_offset * get_global_transform_with_canvas().get_scale()
+	base.global_position = new_position - base.pivot_offset * get_global_transform_with_canvas().get_scale()
 
 func _move_tip(new_position: Vector2) -> void:
-	_tip.global_position = new_position - _tip.pivot_offset * _base.get_global_transform_with_canvas().get_scale()
+	tip.global_position = new_position - tip.pivot_offset * base.get_global_transform_with_canvas().get_scale()
 
 func _is_point_inside_joystick_area(point: Vector2) -> bool:
 	var x: bool = point.x >= global_position.x and point.x <= global_position.x + (size.x * get_global_transform_with_canvas().get_scale().x)
@@ -112,11 +112,11 @@ func _is_point_inside_joystick_area(point: Vector2) -> bool:
 	return x and y
 
 func _get_base_radius() -> Vector2:
-	return _base.size * _base.get_global_transform_with_canvas().get_scale() / 2
+	return base.size * base.get_global_transform_with_canvas().get_scale() / 2
 
 func _is_point_inside_base(point: Vector2) -> bool:
 	var _base_radius = _get_base_radius()
-	var center : Vector2 = _base.global_position + _base_radius
+	var center : Vector2 = base.global_position + _base_radius
 	var vector : Vector2 = point - center
 	if vector.length_squared() <= _base_radius.x * _base_radius.x:
 		return true
@@ -125,7 +125,7 @@ func _is_point_inside_base(point: Vector2) -> bool:
 
 func _update_joystick(touch_position: Vector2) -> void:
 	var _base_radius = _get_base_radius()
-	var center : Vector2 = _base.global_position + _base_radius
+	var center : Vector2 = base.global_position + _base_radius
 	var vector : Vector2 = touch_position - center
 	vector = vector.limit_length(clampzone_size)
 	
@@ -165,9 +165,9 @@ func _reset():
 	is_pressed = false
 	output = Vector2.ZERO
 	_touch_index = -1
-	_tip.modulate = _default_color
-	_base.position = _base_default_position
-	_tip.position = _tip_default_position
+	tip.modulate = _default_color
+	base.position = _base_default_position
+	tip.position = _tip_default_position
 	# Release actions
 	if use_input_actions:
 		for action in [action_left, action_right, action_down, action_up]:

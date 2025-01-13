@@ -184,6 +184,7 @@ layout_mode = 2
 text = "+"
 label_settings = SubResource("LabelSettings_2kojx")
 horizontal_alignment = 1
+vertical_alignment = 2
 
 [node name="slider" type="VSlider" parent="ui/zoom"]
 custom_minimum_size = Vector2(50, 400)
