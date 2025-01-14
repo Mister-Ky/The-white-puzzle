@@ -152,18 +152,19 @@ func _physics_process(_delta : float) -> void:
 		if (left_click_pressed or right_click_pressed) and move_mouse_inside:
 			return
 	
-	for puzzle : Puzzle in z_puzzles:
-		if (left_click_pressed or right_click_pressed) and puzzle.get_rect().has_point(puzzle.get_local_mouse_position()) and not currently_dragged_puzzle:
-			if not timer.is_running:
-				timer.start()
-			currently_dragged_puzzle = puzzle
-			if (right_click_pressed and not puzzle.block) or left_click_pressed:
-				puzzle.set_z(1)
-			for p : Puzzle in z_puzzles:
-				if not p.block and not p == puzzle:
-					p.set_z(0)
-			z_puzzles.sort_custom(sort_puzzles)
-			break
+	if (left_click_pressed or right_click_pressed) and not currently_dragged_puzzle:
+		for puzzle : Puzzle in z_puzzles:
+			if puzzle.get_rect().has_point(puzzle.get_local_mouse_position()):
+				if not timer.is_running:
+					timer.start()
+				currently_dragged_puzzle = puzzle
+				if (right_click_pressed and not puzzle.block) or left_click_pressed:
+					puzzle.set_z(1)
+				for p : Puzzle in z_puzzles:
+					if not p.block and not p == puzzle:
+						p.set_z(0)
+				z_puzzles.sort_custom(sort_puzzles)
+				break
 	
 	if currently_dragged_puzzle:
 		if (left_click_released or right_click_released):
