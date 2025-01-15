@@ -168,7 +168,7 @@ func _physics_process(_delta : float) -> void:
 	
 	if currently_dragged_puzzle:
 		if (left_click_released or right_click_released):
-			if left_click_released:
+			if left_click_released and currently_dragged_puzzle.get_parent() == puzzles:
 				move_puzzle(currently_dragged_puzzle)
 			currently_dragged_puzzle = null
 			if check():
