@@ -21,7 +21,7 @@ var num_puzzles : int
 var currently_dragged_puzzle : Puzzle = null
 var right_android_mode := false
 var move : Node # джостик
-var move_mouse_inside := false
+var lock_mouse_inside := 0
 
 func set_sides() -> void:
 	var offset := randi() % 2
@@ -74,8 +74,12 @@ func _ready() -> void:
 		move.name = "move"
 		ui.add_child(move)
 		ui.move_child(move, zoom.get_index())
-		move.base.mouse_entered.connect(func() -> void: move_mouse_inside = true)
-		move.base.mouse_exited.connect(func() -> void: move_mouse_inside = false)
+		var plus_lock := (func() -> void: lock_mouse_inside += 1)
+		var minus_lock := (func() -> void: lock_mouse_inside -= 1)
+		move.base.mouse_entered.connect(plus_lock)
+		move.base.mouse_exited.connect(minus_lock)
+		right_mode.mouse_entered.connect(plus_lock)
+		right_mode.mouse_exited.connect(minus_lock)
 	else:
 		first_text_info = info.text
 		var del_paths : Array = ["ui/right_mode", "ui/zoom"]
@@ -149,12 +153,14 @@ func _physics_process(_delta : float) -> void:
 			right_click_released = left_click_released
 			left_click_pressed = false
 			left_click_released = false
-		if (left_click_pressed or right_click_pressed) and move_mouse_inside:
+		if (left_click_pressed or right_click_pressed) and not lock_mouse_inside == 0:
 			return
 	
 	if (left_click_pressed or right_click_pressed) and not currently_dragged_puzzle:
 		for puzzle : Puzzle in z_puzzles:
 			if puzzle.get_rect().has_point(puzzle.get_local_mouse_position()):
+				if puzzle.get_parent() == puzzles and puzzles_storage.get_local_mouse_position().x > 0:
+					continue
 				if not timer.is_running:
 					timer.start()
 				currently_dragged_puzzle = puzzle
