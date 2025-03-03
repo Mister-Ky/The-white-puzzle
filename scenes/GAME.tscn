@@ -1,13 +1,13 @@
 [gd_scene load_steps=16 format=3 uid="uid://dx4sfs3ghkh8a"]
 
-[ext_resource type="Script" path="res://scripts/GAME.gd" id="1_tn0fk"]
-[ext_resource type="Script" path="res://scripts/Camera.gd" id="2_bv0mh"]
-[ext_resource type="Script" path="res://scripts/Board.gd" id="2_c1rxm"]
+[ext_resource type="Script" uid="uid://ca03emnumja2u" path="res://scripts/GAME.gd" id="1_tn0fk"]
+[ext_resource type="Script" uid="uid://dk6ukp57m7fvh" path="res://scripts/Camera.gd" id="2_bv0mh"]
+[ext_resource type="Script" uid="uid://byjut0ue0jsg8" path="res://scripts/Board.gd" id="2_c1rxm"]
 [ext_resource type="Material" uid="uid://b5m7ywaoo425l" path="res://data/board_material.tres" id="3_0yixb"]
 [ext_resource type="Texture2D" uid="uid://cfbdgeaepjjt2" path="res://data/storage.png" id="4_gad56"]
 [ext_resource type="Texture2D" uid="uid://ctuakynsr13kb" path="res://data/board.png" id="4_j4twj"]
 [ext_resource type="Material" uid="uid://dybb0lrvhqgu2" path="res://data/fon_material.tres" id="4_qcuf1"]
-[ext_resource type="Script" path="res://scripts/TimeLabel.gd" id="6_43vqf"]
+[ext_resource type="Script" uid="uid://bc6j3uuds22uy" path="res://scripts/TimeLabel.gd" id="6_43vqf"]
 [ext_resource type="AudioStream" uid="uid://dx6vlpv2smud6" path="res://data/rotation.mp3" id="6_clfjk"]
 [ext_resource type="AudioStream" uid="uid://dmwm1vpopfpww" path="res://data/win.mp3" id="7_5orjq"]
 

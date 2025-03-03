@@ -44,9 +44,9 @@ func _on_play_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/GAME.tscn")
 
 func _on_x_value_changed(value : float) -> void:
-	X_label.text = "Width : " + str(value)
+	X_label.text = "Width : " + str(value as int)
 func _on_y_value_changed(value : float) -> void:
-	Y_label.text = "Height : " + str(value)
+	Y_label.text = "Height : " + str(value as int)
 
 func _on_reset_pressed() -> void:
 	Main.size = Vector2i(10, 10)

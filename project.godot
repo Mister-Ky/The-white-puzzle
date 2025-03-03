@@ -11,9 +11,9 @@ config_version=5
 [application]
 
 config/name="The white puzzle"
-config/version="1.1.1.0"
+config/version="1.1.2.0"
 run/main_scene="res://scenes/Menu.tscn"
-config/features=PackedStringArray("4.3", "Forward Plus")
+config/features=PackedStringArray("4.4", "Forward Plus")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 config/icon="res://icons/icon.svg"
 config/windows_native_icon="res://icons/icon.ico"
@@ -141,5 +141,5 @@ pointing/emulate_touch_from_mouse=true
 
 textures/canvas_textures/default_texture_filter=0
 textures/vram_compression/import_etc2_astc=true
-environment/defaults/default_clear_color=Color(0.20871, 0.20871, 0.20871, 1)
 viewport/hdr_2d=true
+environment/defaults/default_clear_color=Color(0.20871, 0.20871, 0.20871, 1)
