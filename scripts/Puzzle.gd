@@ -76,7 +76,7 @@ func get_texture_side(side : Puzzle.Side) -> Texture2D:
 
 func get_rotated_sides() -> Dictionary:
 	var sides := {}
-	match int(rotation_degrees) % 360:
+	match posmod(roundi(rotation_degrees), 360):
 		0:
 			sides["top"] = top_side
 			sides["right"] = right_side
