@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dmoi8egpgdrjb"]
+[gd_scene format=3 uid="uid://dmoi8egpgdrjb"]
 
 [ext_resource type="Script" uid="uid://dyuxtc35h7rbu" path="res://scripts/Menu.gd" id="1_xvtuy"]
 [ext_resource type="Material" uid="uid://dybb0lrvhqgu2" path="res://data/fon_material.tres" id="2_tyq73"]
@@ -25,10 +25,10 @@ font_size = 30
 outline_size = 20
 outline_color = Color(0, 0, 0, 1)
 
-[node name="Menu" type="Node"]
+[node name="Menu" type="Node" unique_id=193972388]
 script = ExtResource("1_xvtuy")
 
-[node name="fon" type="ColorRect" parent="."]
+[node name="fon" type="ColorRect" parent="." unique_id=23795016]
 material = ExtResource("2_tyq73")
 anchors_preset = 15
 anchor_right = 1.0
@@ -37,7 +37,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0)
 
-[node name="main" type="MarginContainer" parent="."]
+[node name="main" type="MarginContainer" parent="." unique_id=860135441]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -47,20 +47,20 @@ theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 
-[node name="vbox" type="VBoxContainer" parent="main"]
+[node name="vbox" type="VBoxContainer" parent="main" unique_id=1409001233]
 layout_mode = 2
 
-[node name="logo" type="HBoxContainer" parent="main/vbox"]
+[node name="logo" type="HBoxContainer" parent="main/vbox" unique_id=1090192842]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 3
 
-[node name="logo" type="TextureRect" parent="main/vbox/logo"]
+[node name="logo" type="TextureRect" parent="main/vbox/logo" unique_id=415630921]
 layout_mode = 2
 texture = ExtResource("4_ml05b")
 stretch_mode = 3
 
-[node name="title" type="Label" parent="main/vbox/logo"]
+[node name="title" type="Label" parent="main/vbox/logo" unique_id=1351105960]
 layout_mode = 2
 size_flags_vertical = 3
 text = "The white puzzle"
@@ -68,12 +68,12 @@ label_settings = SubResource("LabelSettings_ape0v")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="margin" type="MarginContainer" parent="main/vbox"]
+[node name="margin" type="MarginContainer" parent="main/vbox" unique_id=1987457275]
 layout_mode = 2
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="vbox" type="VBoxContainer" parent="main/vbox/margin"]
+[node name="vbox" type="VBoxContainer" parent="main/vbox/margin" unique_id=1048033630]
 custom_minimum_size = Vector2(800, 0)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -82,98 +82,98 @@ size_flags_stretch_ratio = 2.0
 theme = SubResource("Theme_eyyvc")
 theme_override_constants/separation = 30
 
-[node name="play" type="Button" parent="main/vbox/margin/vbox"]
+[node name="play" type="Button" parent="main/vbox/margin/vbox" unique_id=1990369463]
 layout_mode = 2
 text = "Play"
 
-[node name="x_hbox" type="HBoxContainer" parent="main/vbox/margin/vbox"]
+[node name="x_hbox" type="HBoxContainer" parent="main/vbox/margin/vbox" unique_id=714952697]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="-" type="Button" parent="main/vbox/margin/vbox/x_hbox"]
+[node name="-" type="Button" parent="main/vbox/margin/vbox/x_hbox" unique_id=1749848834]
 custom_minimum_size = Vector2(89, 89)
 layout_mode = 2
 text = "-"
 
-[node name="vbox" type="VBoxContainer" parent="main/vbox/margin/vbox/x_hbox"]
+[node name="vbox" type="VBoxContainer" parent="main/vbox/margin/vbox/x_hbox" unique_id=394685161]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="X_label" type="Label" parent="main/vbox/margin/vbox/x_hbox/vbox"]
+[node name="X_label" type="Label" parent="main/vbox/margin/vbox/x_hbox/vbox" unique_id=315795585]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Width : 10"
 
-[node name="X" type="HSlider" parent="main/vbox/margin/vbox/x_hbox/vbox"]
+[node name="X" type="HSlider" parent="main/vbox/margin/vbox/x_hbox/vbox" unique_id=1611932242]
 unique_name_in_owner = true
 layout_mode = 2
 min_value = 1.0
 max_value = 128.0
 value = 10.0
 
-[node name="+" type="Button" parent="main/vbox/margin/vbox/x_hbox"]
+[node name="+" type="Button" parent="main/vbox/margin/vbox/x_hbox" unique_id=434086844]
 custom_minimum_size = Vector2(89, 89)
 layout_mode = 2
 text = "+"
 
-[node name="y_hbox" type="HBoxContainer" parent="main/vbox/margin/vbox"]
+[node name="y_hbox" type="HBoxContainer" parent="main/vbox/margin/vbox" unique_id=1723289643]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="-" type="Button" parent="main/vbox/margin/vbox/y_hbox"]
+[node name="-" type="Button" parent="main/vbox/margin/vbox/y_hbox" unique_id=326575295]
 custom_minimum_size = Vector2(89, 89)
 layout_mode = 2
 text = "-"
 
-[node name="vbox" type="VBoxContainer" parent="main/vbox/margin/vbox/y_hbox"]
+[node name="vbox" type="VBoxContainer" parent="main/vbox/margin/vbox/y_hbox" unique_id=304700437]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Y_label" type="Label" parent="main/vbox/margin/vbox/y_hbox/vbox"]
+[node name="Y_label" type="Label" parent="main/vbox/margin/vbox/y_hbox/vbox" unique_id=1406477040]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Height : 10"
 
-[node name="Y" type="HSlider" parent="main/vbox/margin/vbox/y_hbox/vbox"]
+[node name="Y" type="HSlider" parent="main/vbox/margin/vbox/y_hbox/vbox" unique_id=1395135783]
 unique_name_in_owner = true
 layout_mode = 2
 min_value = 1.0
 max_value = 128.0
 value = 10.0
 
-[node name="+" type="Button" parent="main/vbox/margin/vbox/y_hbox"]
+[node name="+" type="Button" parent="main/vbox/margin/vbox/y_hbox" unique_id=584355092]
 custom_minimum_size = Vector2(89, 89)
 layout_mode = 2
 text = "+"
 
-[node name="reset" type="Button" parent="main/vbox/margin/vbox"]
+[node name="reset" type="Button" parent="main/vbox/margin/vbox" unique_id=1148549744]
 layout_mode = 2
 text = "Reset"
 
-[node name="exit" type="Button" parent="main/vbox/margin/vbox"]
+[node name="exit" type="Button" parent="main/vbox/margin/vbox" unique_id=734024333]
 layout_mode = 2
 text = "EXIT"
 
-[node name="hbox" type="HBoxContainer" parent="main/vbox/margin/vbox"]
+[node name="hbox" type="HBoxContainer" parent="main/vbox/margin/vbox" unique_id=494194462]
 layout_mode = 2
 
-[node name="grid" type="CheckBox" parent="main/vbox/margin/vbox/hbox"]
+[node name="grid" type="CheckBox" parent="main/vbox/margin/vbox/hbox" unique_id=1903565059]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Show the grid"
 
-[node name="separator" type="VSeparator" parent="main/vbox/margin/vbox/hbox"]
+[node name="separator" type="VSeparator" parent="main/vbox/margin/vbox/hbox" unique_id=1463080067]
 layout_mode = 2
 
-[node name="hard" type="CheckBox" parent="main/vbox/margin/vbox/hbox"]
+[node name="hard" type="CheckBox" parent="main/vbox/margin/vbox/hbox" unique_id=216210783]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 text = "Hard (Recommended)"
 
-[node name="audio" type="MarginContainer" parent="."]
+[node name="audio" type="MarginContainer" parent="." unique_id=1708457003]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -185,15 +185,15 @@ theme_override_constants/margin_top = 100
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = -20
 
-[node name="vbox" type="VBoxContainer" parent="audio"]
+[node name="vbox" type="VBoxContainer" parent="audio" unique_id=1554660513]
 layout_mode = 2
 
-[node name="master_label" type="Label" parent="audio/vbox"]
+[node name="master_label" type="Label" parent="audio/vbox" unique_id=1921919238]
 layout_mode = 2
 theme_override_font_sizes/font_size = 26
 text = "Master Volume"
 
-[node name="master" type="HSlider" parent="audio/vbox"]
+[node name="master" type="HSlider" parent="audio/vbox" unique_id=745100815]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
@@ -201,12 +201,12 @@ max_value = 2.0
 step = 0.01
 value = 1.0
 
-[node name="music_label" type="Label" parent="audio/vbox"]
+[node name="music_label" type="Label" parent="audio/vbox" unique_id=1909580618]
 layout_mode = 2
 theme_override_font_sizes/font_size = 26
 text = "Music Volume"
 
-[node name="music" type="HSlider" parent="audio/vbox"]
+[node name="music" type="HSlider" parent="audio/vbox" unique_id=1227705606]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
@@ -214,12 +214,12 @@ max_value = 2.0
 step = 0.01
 value = 1.0
 
-[node name="sfx_label" type="Label" parent="audio/vbox"]
+[node name="sfx_label" type="Label" parent="audio/vbox" unique_id=880611285]
 layout_mode = 2
 theme_override_font_sizes/font_size = 26
 text = "SFX Volume"
 
-[node name="sfx" type="HSlider" parent="audio/vbox"]
+[node name="sfx" type="HSlider" parent="audio/vbox" unique_id=1049425970]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
@@ -227,7 +227,7 @@ max_value = 2.0
 step = 0.01
 value = 1.0
 
-[node name="godot" type="MarginContainer" parent="."]
+[node name="godot" type="MarginContainer" parent="." unique_id=1754480374]
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
@@ -242,40 +242,41 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 10
 
-[node name="vbox" type="VBoxContainer" parent="godot"]
+[node name="vbox" type="VBoxContainer" parent="godot" unique_id=1178187646]
 layout_mode = 2
 
-[node name="godot_icon" type="TextureButton" parent="godot/vbox"]
+[node name="godot_icon" type="TextureButton" parent="godot/vbox" unique_id=24358359]
 layout_mode = 2
 size_flags_horizontal = 4
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource("3_c6fof")
 stretch_mode = 3
 
-[node name="label" type="Label" parent="godot/vbox"]
+[node name="label" type="Label" parent="godot/vbox" unique_id=687167938]
 layout_mode = 2
 text = "Made in GODOT"
 label_settings = SubResource("LabelSettings_k4k1x")
 
-[node name="credits" type="VBoxContainer" parent="."]
+[node name="credits" type="VBoxContainer" parent="." unique_id=1983718056]
 offset_left = 10.0
 offset_top = 5.0
 offset_right = 50.0
 offset_bottom = 45.0
 theme_override_constants/separation = 20
 
-[node name="version" type="Label" parent="credits"]
+[node name="version" type="Label" parent="credits" unique_id=1326659043]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Version : unknown"
 label_settings = SubResource("LabelSettings_sx0ew")
 
-[node name="author" type="Label" parent="credits"]
+[node name="author" type="Label" parent="credits" unique_id=632293341]
 layout_mode = 2
 text = "GAME :
 Author - Mister KygecHik3524"
 label_settings = SubResource("LabelSettings_sx0ew")
 
-[node name="addons_android" type="Label" parent="credits"]
+[node name="addons_android" type="Label" parent="credits" unique_id=812176844]
 unique_name_in_owner = true
 layout_mode = 2
 text = "ADDONS (ANDROID) :

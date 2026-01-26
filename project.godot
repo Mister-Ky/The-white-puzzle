@@ -8,12 +8,16 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="The white puzzle"
-config/version="1.1.2.0"
+config/version="1.1.3.0"
 run/main_scene="res://scenes/Menu.tscn"
-config/features=PackedStringArray("4.4", "Forward Plus")
+config/features=PackedStringArray("4.6", "Forward Plus")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 config/icon="res://icons/icon.svg"
 config/windows_native_icon="res://icons/icon.ico"
@@ -22,6 +26,10 @@ config/windows_native_icon="res://icons/icon.ico"
 
 Main="*res://scripts/Main.gd"
 Music="res://scenes/Music.tscn"
+
+[debug]
+
+gdscript/warnings/int_as_enum_without_cast=0
 
 [display]
 
@@ -53,11 +61,17 @@ texture={
 "compress/hdr_compression": 1,
 "compress/high_quality": true,
 "compress/lossy_quality": 0.7,
-"compress/mode": 2,
+"compress/mode": 0,
 "compress/normal_map": 0,
+"compress/rdo_quality_loss": 0.0,
+"compress/uastc_level": 0,
 "detect_3d/compress_to": 1,
 "mipmaps/generate": false,
 "mipmaps/limit": -1,
+"process/channel_remap/alpha": 3,
+"process/channel_remap/blue": 2,
+"process/channel_remap/green": 1,
+"process/channel_remap/red": 0,
 "process/fix_alpha_border": true,
 "process/hdr_as_srgb": false,
 "process/hdr_clamp_exposure": false,

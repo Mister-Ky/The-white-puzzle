@@ -9,7 +9,7 @@ func _ready() -> void:
 	set_physics_process(is_running)
 
 func _set_time_text(time : float) -> void:
-	text = "Time: " + String("%0.3f" % time) + " sec"
+	text = "Time: " + String("%0.2f" % time) + " sec"
 
 func start() -> void:
 	is_running = true

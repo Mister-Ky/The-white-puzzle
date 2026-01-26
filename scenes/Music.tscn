@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://pf04uqy2iypl"]
+[gd_scene format=3 uid="uid://pf04uqy2iypl"]
 
 [ext_resource type="AudioStream" uid="uid://blkk422gqb8ff" path="res://data/music.mp3" id="1_toosc"]
 
-[node name="Music" type="AudioStreamPlayer"]
+[node name="Music" type="AudioStreamPlayer" unique_id=926889485]
 stream = ExtResource("1_toosc")
 autoplay = true
 bus = &"music"

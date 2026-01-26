@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dx4sfs3ghkh8a"]
+[gd_scene format=3 uid="uid://dx4sfs3ghkh8a"]
 
 [ext_resource type="Script" uid="uid://ca03emnumja2u" path="res://scripts/GAME.gd" id="1_tn0fk"]
 [ext_resource type="Script" uid="uid://dk6ukp57m7fvh" path="res://scripts/Camera.gd" id="2_bv0mh"]
@@ -33,39 +33,39 @@ outline_color = Color(0, 0, 0, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_2kojx"]
 font_size = 32
 
-[node name="GAME" type="Node"]
+[node name="GAME" type="Node" unique_id=653661462]
 script = ExtResource("1_tn0fk")
 
-[node name="board" type="Node2D" parent="."]
+[node name="board" type="Node2D" parent="." unique_id=1038079165]
 unique_name_in_owner = true
 script = ExtResource("2_c1rxm")
 
-[node name="sprite" type="Sprite2D" parent="board"]
+[node name="sprite" type="Sprite2D" parent="board" unique_id=1051399119]
 z_index = -2
 material = ExtResource("3_0yixb")
 texture = ExtResource("4_j4twj")
 centered = false
 
-[node name="puzzles" type="Node2D" parent="."]
+[node name="puzzles" type="Node2D" parent="." unique_id=63739546]
 unique_name_in_owner = true
 
-[node name="camera" type="Camera2D" parent="."]
+[node name="camera" type="Camera2D" parent="." unique_id=656699350]
 unique_name_in_owner = true
 script = ExtResource("2_bv0mh")
 
-[node name="rotation" type="AudioStreamPlayer" parent="."]
+[node name="rotation" type="AudioStreamPlayer" parent="." unique_id=307461917]
 unique_name_in_owner = true
 stream = ExtResource("6_clfjk")
 bus = &"sfx"
 
-[node name="win" type="AudioStreamPlayer" parent="."]
+[node name="win" type="AudioStreamPlayer" parent="." unique_id=867852491]
 stream = ExtResource("7_5orjq")
 bus = &"sfx"
 
-[node name="ui" type="CanvasLayer" parent="."]
+[node name="ui" type="CanvasLayer" parent="." unique_id=53402924]
 unique_name_in_owner = true
 
-[node name="info" type="Label" parent="ui"]
+[node name="info" type="Label" parent="ui" unique_id=662233615]
 unique_name_in_owner = true
 z_index = 4096
 offset_left = 10.0
@@ -78,25 +78,25 @@ WASD — camera movement
 Mouse wheel — camera zoom"
 label_settings = SubResource("LabelSettings_rm77l")
 
-[node name="puzzles" type="HBoxContainer" parent="ui"]
+[node name="puzzles" type="HBoxContainer" parent="ui" unique_id=1222858528]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="dummy" type="Control" parent="ui/puzzles"]
+[node name="dummy" type="Control" parent="ui/puzzles" unique_id=1188967438]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
 
-[node name="storage" type="Panel" parent="ui/puzzles"]
+[node name="storage" type="Panel" parent="ui/puzzles" unique_id=553228089]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxTexture_3a8wa")
 
-[node name="puzzles_storage" type="Control" parent="ui/puzzles/storage"]
+[node name="puzzles_storage" type="Control" parent="ui/puzzles/storage" unique_id=1439659186]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(479, 1080)
 layout_mode = 1
@@ -106,10 +106,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="right_mode" type="TextureButton" parent="ui"]
+[node name="right_mode" type="TextureButton" parent="ui" unique_id=1030576605]
 unique_name_in_owner = true
 
-[node name="victory" type="Control" parent="ui"]
+[node name="victory" type="Control" parent="ui" unique_id=1713979561]
 unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 15
@@ -119,7 +119,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_6ngh7")
 
-[node name="fon" type="ColorRect" parent="ui/victory"]
+[node name="fon" type="ColorRect" parent="ui/victory" unique_id=1691652399]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -128,7 +128,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.356863)
 
-[node name="vbox" type="VBoxContainer" parent="ui/victory"]
+[node name="vbox" type="VBoxContainer" parent="ui/victory" unique_id=902592825]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -136,11 +136,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="vbox1" type="VBoxContainer" parent="ui/victory/vbox"]
+[node name="vbox1" type="VBoxContainer" parent="ui/victory/vbox" unique_id=923789057]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="info" type="Label" parent="ui/victory/vbox/vbox1"]
+[node name="info" type="Label" parent="ui/victory/vbox/vbox1" unique_id=730638456]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
@@ -149,11 +149,11 @@ label_settings = SubResource("LabelSettings_tvgrn")
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="point" type="Control" parent="ui/victory/vbox/vbox1"]
+[node name="point" type="Control" parent="ui/victory/vbox/vbox1" unique_id=336674854]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="timer_point" type="Control" parent="ui/victory/vbox/vbox1/point"]
+[node name="timer_point" type="Control" parent="ui/victory/vbox/vbox1/point" unique_id=1731654180]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -163,22 +163,22 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="vbox2" type="VBoxContainer" parent="ui/victory/vbox"]
+[node name="vbox2" type="VBoxContainer" parent="ui/victory/vbox" unique_id=1870295314]
 custom_minimum_size = Vector2(800, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 3
 theme_override_constants/separation = 20
 
-[node name="again" type="Button" parent="ui/victory/vbox/vbox2"]
+[node name="again" type="Button" parent="ui/victory/vbox/vbox2" unique_id=390440254]
 layout_mode = 2
 text = "Again"
 
-[node name="menu" type="Button" parent="ui/victory/vbox/vbox2"]
+[node name="menu" type="Button" parent="ui/victory/vbox/vbox2" unique_id=1501338657]
 layout_mode = 2
 text = "Exit to menu"
 
-[node name="zoom" type="VBoxContainer" parent="ui"]
+[node name="zoom" type="VBoxContainer" parent="ui" unique_id=1757644561]
 unique_name_in_owner = true
 anchors_preset = 4
 anchor_top = 0.5
@@ -188,14 +188,14 @@ offset_right = 50.0
 offset_bottom = 238.0
 grow_vertical = 2
 
-[node name="+" type="Label" parent="ui/zoom"]
+[node name="+" type="Label" parent="ui/zoom" unique_id=2048762119]
 layout_mode = 2
 text = "+"
 label_settings = SubResource("LabelSettings_2kojx")
 horizontal_alignment = 1
 vertical_alignment = 2
 
-[node name="slider" type="VSlider" parent="ui/zoom"]
+[node name="slider" type="VSlider" parent="ui/zoom" unique_id=819827468]
 custom_minimum_size = Vector2(50, 400)
 layout_mode = 2
 min_value = 0.05
@@ -203,13 +203,13 @@ max_value = 3.0
 step = 0.01
 value = 1.0
 
-[node name="-" type="Label" parent="ui/zoom"]
+[node name="-" type="Label" parent="ui/zoom" unique_id=1149192476]
 layout_mode = 2
 text = "-"
 label_settings = SubResource("LabelSettings_2kojx")
 horizontal_alignment = 1
 
-[node name="timer" type="Label" parent="ui"]
+[node name="timer" type="Label" parent="ui" unique_id=1022015831]
 unique_name_in_owner = true
 anchors_preset = 2
 anchor_top = 1.0
@@ -221,10 +221,10 @@ grow_vertical = 0
 label_settings = SubResource("LabelSettings_rm77l")
 script = ExtResource("6_43vqf")
 
-[node name="screen" type="CanvasLayer" parent="."]
+[node name="screen" type="CanvasLayer" parent="." unique_id=901198508]
 layer = -128
 
-[node name="fon" type="ColorRect" parent="screen"]
+[node name="fon" type="ColorRect" parent="screen" unique_id=1470104082]
 material = ExtResource("4_qcuf1")
 anchors_preset = 15
 anchor_right = 1.0
