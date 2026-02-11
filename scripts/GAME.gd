@@ -67,7 +67,6 @@ func set_sides_hard() -> void:
 func _ready() -> void:
 	if Main.is_android():
 		android_right_update()
-		set_process(false)
 		info.hide()
 		info.queue_free()
 		move = load("res://addons/virtual_joystick/virtual_joystick_scene.tscn").instantiate()
@@ -141,7 +140,9 @@ func move_puzzle(puzzle : Puzzle) -> void:
 		puzzle.set_z(-1)
 		z_puzzles.sort_custom(sort_puzzles)
 
-func _physics_process(_delta : float) -> void:
+func _process(delta : float) -> void:
+	if not Main.is_android():
+		_windows_process(delta)
 	var left_click_pressed := Input.is_action_just_pressed("left_click")
 	var left_click_released := Input.is_action_just_released("left_click")
 	var right_click_pressed := Input.is_action_just_pressed("right_click")
@@ -183,7 +184,7 @@ func _physics_process(_delta : float) -> void:
 			elif blocked == num_puzzles:
 				z_puzzles.sort_custom(sort_puzzles)
 		elif right_click_pressed:
-			set_physics_process(false)
+			set_process(false)
 			rotation.play()
 			var tween := create_tween().set_trans(Tween.TransitionType.TRANS_SINE).set_ease(Tween.EaseType.EASE_IN)
 			tween.tween_property(currently_dragged_puzzle, "rotation_degrees", currently_dragged_puzzle.rotation_degrees + 90, 0.2)
@@ -211,7 +212,7 @@ func rot() -> void:
 	if check():
 		win()
 	else:
-		set_physics_process(true)
+		set_process(true)
 
 func check() -> bool:
 	if blocked == num_puzzles:
@@ -237,7 +238,7 @@ func check() -> bool:
 	return false
 
 func win() -> void:
-	set_physics_process(false)
+	set_process(false)
 	timer.stop()
 	var tween := create_tween().set_trans(Tween.TransitionType.TRANS_SINE).set_ease(Tween.EaseType.EASE_IN)
 	tween.tween_property(%storage, "global_position:x", get_viewport().size.x + %storage.size.x, 1.0)
@@ -267,7 +268,8 @@ func _on_menu_pressed() -> void:
 var hold_time := 1.5
 var time_held := 0.0
 var is_key_held := false
-func _process(delta : float) -> void:
+var last_dots_count := -1
+func _windows_process(delta : float) -> void:
 	if Input.is_action_pressed("ui_cancel"):
 		if is_key_held:
 			time_held += delta
@@ -276,10 +278,14 @@ func _process(delta : float) -> void:
 			is_key_held = true
 		if time_held >= hold_time:
 			get_tree().change_scene_to_file("res://scenes/Menu.tscn")
-		info.text = "EXIT" + ".".repeat(int(time_held / 0.5) + 1)
+		var current_dots := int(time_held / 0.5) + 1
+		if not current_dots == last_dots_count:
+			info.text = "EXIT" + ".".repeat(current_dots)
+			last_dots_count = current_dots
 	elif Input.is_action_just_released("ui_cancel"):
 		time_held = 0.0
 		is_key_held = false
+		last_dots_count = -1
 		info.text = first_text_info
 
 # android
